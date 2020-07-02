@@ -53,7 +53,7 @@ label.file img {
   margin-bottom: 20px;
 }
 .input-text input::placeholder {
-  font-size: 14px;
+  font-size: 1rem;
 }
 .des {
   border: 2px solid black;
@@ -400,4 +400,12 @@ button:focus {
   100% {
     transform: rotate(360deg);
   }
+}
+
+[contenteditable="true"]:empty:before {
+  content: attr(placeholder);
+  pointer-events: none;
+  color: rgb(117, 117, 117);
+  font-family: "Raleway";
+  display: block; /* For Firefox */
 }

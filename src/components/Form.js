@@ -17,10 +17,42 @@ const NewletterForm = () => {
   const [addText, setAddText] = useState("");
   const [selectedBtn, setSelectedBtn] = useState(null);
   const [loadingImg, setLoadingImg] = useState(false);
-  const [html, setHtml] = useState("Enter sample text message...");
+  const [html, setHtml] = useState("");
+  const [position, setPosition] = useState(0);
 
   const sampleInput = useRef(null);
   const history = useHistory();
+
+  const cursorPosition = (event) => {
+    var tag = document.getElementById("editable");
+
+    // Creates range object
+    var setpos = document.createRange();
+
+    // Creates object for selection
+    var set = window.getSelection();
+    // console.log(set.getRangeAt(1));
+    const currentPosition = set.getRangeAt(0).startOffset;
+    // console.log("tag", set.getRangeAt(0));
+    setPosition(currentPosition);
+
+    // // Set start position of range
+    // setpos.setStart(tag.childNodes[0], 1);
+
+    // // Collapse range within its boundary points
+    // // Returns boolean
+    // setpos.collapse(true);
+
+    // // Remove all ranges set
+    // set.removeAllRanges();
+
+    // // Add range with respect to range object.
+    // set.addRange(setpos);
+
+    // // Set cursor on focus
+    // tag.focus();
+    // console.log("called");
+  };
 
   const submit = (event) => {
     event.preventDefault();
@@ -62,7 +94,7 @@ const NewletterForm = () => {
         .post(`${BASE_URL}/image-upload`, data)
         .then((res) => {
           setLoadingImg(false);
-          setResMainImage(res.data.path);
+          setResMainImage(encodeURI(res.data.path));
         })
         .catch((err) => {
           setLoadingImg(false);
@@ -89,6 +121,14 @@ const NewletterForm = () => {
           setResTextImage(res.data.path);
           const tag = createImgTag(encodeURI(res.data.path));
           setHtml(html + tag);
+          // console.log("POST", position);
+          // console.log(html.slice(0, position));
+          // const firstHalf = html.slice(0, position);
+          // const lastHalf = html.slice(position);
+          // console.log(firstHalf + " % " + lastHalf);
+          // // console.log(html, html[position - 1], position);
+
+          // setHtml(firstHalf + tag + lastHalf);
 
           // setAddText(res.data.path);
         })
@@ -122,7 +162,17 @@ const NewletterForm = () => {
         .then((res) => {
           console.log(res);
           let newString = sampleText + res.data.link + " ";
-          setHtml(html + " " + res.data.link);
+          console.log("html", html);
+          console.log("POST", position);
+          // console.log(html.slice(0, position));
+          const firstHalf = html.slice(0, position);
+          const lastHalf = html.slice(position);
+          // console.log(firstHalf + " % " + lastHalf);
+          // console.log(html, html[position - 1], position);
+
+          setHtml(firstHalf + " " + newString + " " + lastHalf);
+
+          // setHtml(html + " " + res.data.link);
           setAddText("");
           sampleInput.current.focus();
         })
@@ -151,13 +201,23 @@ const NewletterForm = () => {
     borderRadius: "50%",
   };
 
+  let coverImgStyle = {
+    backgroundImage: `url("${resMainImage}")`,
+    height: "100px",
+    width: "100px",
+    margin: "0 auto",
+    backgroundSize: "cover",
+    borderRadius: "50%",
+    backgroundPosition: "center",
+  };
+  console.log(position);
   return (
     <form onSubmit={submit} encType="multipart/form-data">
       <div className="img-upload">
         {loadingImg ? (
           <div className="loader file"></div>
         ) : resMainImage ? (
-          <img src={resMainImage} alt="upload button" style={imgStyle} />
+          <div style={coverImgStyle} />
         ) : (
           <label className="file">
             <img src={uploadImg} alt="upload button" />
@@ -241,6 +301,7 @@ const NewletterForm = () => {
         </div>
       </div>
       <Editor
+        cursorPosition={cursorPosition}
         reference={sampleInput}
         html={html}
         handleChange={(e) => setHtml(e.target.value)}
