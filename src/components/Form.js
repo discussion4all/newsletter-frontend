@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import uploadImg from "../images/file-upload.png";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { connect } from "react-redux";
 import { BASE_URL } from "../config";
 import Editor from "./Editor";
+import { saveNewsletter } from "../actions/newsletterActions";
 
-const NewletterForm = () => {
+const NewletterForm = (props) => {
   const [mainImage, setMainImage] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -56,7 +58,8 @@ const NewletterForm = () => {
 
   const submit = (event) => {
     event.preventDefault();
-
+    console.log(description, html, resMainImage);
+    props.saveNewsletter({ title, description, html, imgURL: resMainImage });
     axios
       .post(`${BASE_URL}/create`, {
         image: resMainImage,
@@ -162,17 +165,17 @@ const NewletterForm = () => {
         .then((res) => {
           console.log(res);
           let newString = sampleText + res.data.link + " ";
-          console.log("html", html);
-          console.log("POST", position);
-          // console.log(html.slice(0, position));
-          const firstHalf = html.slice(0, position);
-          const lastHalf = html.slice(position);
-          // console.log(firstHalf + " % " + lastHalf);
-          // console.log(html, html[position - 1], position);
+          // console.log("html", html);
+          // console.log("POST", position);
+          // // console.log(html.slice(0, position));
+          // const firstHalf = html.slice(0, position);
+          // const lastHalf = html.slice(position);
+          // // console.log(firstHalf + " % " + lastHalf);
+          // // console.log(html, html[position - 1], position);
 
-          setHtml(firstHalf + " " + newString + " " + lastHalf);
+          // setHtml(firstHalf + " " + newString + " " + lastHalf);
 
-          // setHtml(html + " " + res.data.link);
+          setHtml(html + " " + res.data.link);
           setAddText("");
           sampleInput.current.focus();
         })
@@ -210,7 +213,7 @@ const NewletterForm = () => {
     borderRadius: "50%",
     backgroundPosition: "center",
   };
-  console.log(position);
+  // console.log(position);
   return (
     <form onSubmit={submit} encType="multipart/form-data">
       <div className="img-upload">
@@ -327,4 +330,4 @@ const NewletterForm = () => {
   );
 };
 
-export default NewletterForm;
+export default connect(null, { saveNewsletter })(NewletterForm);

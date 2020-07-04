@@ -1,0 +1,3 @@
+export const SAVE_NEWSLETTER = "SAVE_NEWSLETTER";
+export const SAVE_IN_LOCAL = "SAVE_IN_LOCAL";
+export const SAVE_PAYMENT = "SAVE_PAYMENT";

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
 import { BASE_URL } from "../config";
+import { refillStore, savePayment } from "../actions/newsletterActions";
 
 const Payment = (props) => {
-  const [yearly, setYearly] = useState("");
-  const [monthly, setMonthly] = useState("");
+  const [yearly, setYearly] = useState(props.payment.yearly);
+  const [monthly, setMonthly] = useState(props.payment.monthly);
   const [showMessage, setShowMessage] = useState(false);
   const [stripeConnected, setStripeConnected] = useState(false);
   //const [userId, setUserId] = useState(0);
@@ -13,10 +15,7 @@ const Payment = (props) => {
   const [yearlyCheckbox, setYearlyCheckbox] = useState(false);
   const [monthlyCheckbox, setMonthlyCheckbox] = useState(false);
   const [saveDisable, setSaveDisable] = useState(true);
-  const [title, setTitle] = useState(
-    props.location.state ? props.location.state.title : ""
-  );
-
+  // console.log(props.payment);
   const handleSave = () => {
     // let id = Math.floor(Math.random() * 100000);
     // setUserId(id);
@@ -29,7 +28,8 @@ const Payment = (props) => {
       .post(`${BASE_URL}/payment`, data)
       .then((res) => {
         setShowMessage(true);
-        deleteFromLocalStorage("title");
+        console.log(data);
+        props.savePayment(data);
         deleteFromLocalStorage("yearly");
         deleteFromLocalStorage("monthly");
       })
@@ -57,7 +57,7 @@ const Payment = (props) => {
 
   // updates save button status
   useEffect(() => {
-    if ((yearly || monthly) && stripeConnected) {
+    if (yearly || monthly) {
       setSaveDisable(false);
       setUserStatus(true);
       return;
@@ -106,18 +106,7 @@ const Payment = (props) => {
   }, [yearly, monthly]);
 
   useEffect(() => {
-    console.log("called", props.location.state);
-    if (props.location.state) {
-      saveToLocalStorage("title", props.location.state.title);
-    } else {
-      const titleFromLocal = getFromLocalStorage("title");
-      const yearlyFromLocal = getFromLocalStorage("yearly");
-      const monthlyFromLocal = getFromLocalStorage("monthly");
-      console.log(titleFromLocal);
-      setTitle(titleFromLocal);
-      setYearly(yearlyFromLocal || "");
-      setMonthly(monthlyFromLocal || "");
-    }
+    props.refillStore();
   }, []);
 
   const STRIPE_URL =
@@ -132,6 +121,11 @@ const Payment = (props) => {
     };
   }
 
+  useEffect(() => {
+    setMonthly(props.payment.monthly);
+    setYearly(props.payment.yearly);
+  }, [props.payment]);
+
   const currencyFormat = (value) => {
     const updatedValue =
       value.match(/[0-9]/g) && value.match(/[0-9]/g).join("");
@@ -139,11 +133,13 @@ const Payment = (props) => {
     return updatedValue ? "$" + updatedValue : "";
   };
 
+  // console.log("store payment", props.payment);
+
   return (
     <div className="container">
       <div className="news-main">
         <div className="News-head">
-          <h1>{title || "Newsletter Title"}</h1>
+          <h1>{props.title || "Newsletter Title"}</h1>
           <p>Which plan would you like to offer?</p>
         </div>
         <div className="news-check">
@@ -219,7 +215,15 @@ const Payment = (props) => {
   );
 };
 
-export default Payment;
+const mapStateToProps = (state) => {
+  console.log("state", state.newsletter);
+  return {
+    title: state.newsletter.title,
+    payment: state.newsletter.payment,
+  };
+};
+
+export default connect(mapStateToProps, { refillStore, savePayment })(Payment);
 
 const saveToLocalStorage = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
