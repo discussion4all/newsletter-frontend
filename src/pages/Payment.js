@@ -10,10 +10,13 @@ const Payment = (props) => {
       <div className="main-boxes">
         <div
           className="cir"
-          style={{ backgroundImage: `url("${blogPosterURL}")` }}
+          style={{
+            backgroundImage: `url("${blogPosterURL}")`,
+            backgroundColor: !blogPosterURL ? "#000" : "",
+          }}
         ></div>
-        <h1>{title}</h1>
-        <p>{description}</p>
+        <h1>{title || "Newsletter Title"}</h1>
+        <p>{description || "Newsletter description"}</p>
         <h2>
           By{" "}
           <span>

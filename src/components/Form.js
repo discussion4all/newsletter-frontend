@@ -78,13 +78,14 @@ const NewletterForm = (props) => {
   };
 
   useEffect(() => {
-    if (title && description && html && mainImage) {
+    if (mainImage && title && description && html) {
+      console.log("here");
       setButtonState(false);
       return;
     }
     setButtonState(true);
     return;
-  }, [mainImage, title, description, sampleText]);
+  }, [mainImage, title, description, html]);
 
   const uploadImage = (image) => {
     if (image) {

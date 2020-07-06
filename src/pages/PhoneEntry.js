@@ -16,10 +16,13 @@ const PhoneEntry = (props) => {
       <div className="main-boxes">
         <div
           className="cir"
-          style={{ backgroundImage: `url("${blogPosterURL}")` }}
+          style={{
+            backgroundImage: `url("${blogPosterURL}")`,
+            backgroundColor: !blogPosterURL ? "#000" : "",
+          }}
         ></div>
-        <h1>{title}</h1>
-        <p>{description}</p>
+        <h1>{title || "Newsletter Title"}</h1>
+        <p>{description || "Newsletter description"}</p>
         <h2>
           By{" "}
           <span>
@@ -47,11 +50,17 @@ const PhoneEntry = (props) => {
           >
             view sample
           </a>
-          {showSample && (
+          {showSample && sampleText && (
             <div
               className="vs-box"
               dangerouslySetInnerHTML={{ __html: sampleText }}
             ></div>
+          )}
+          {showSample && !sampleText && (
+            <div className="vs-box">
+              <p>"failture is success in progress." -- Albert Einstein</p>
+              <img src={dummy} class="vs-img"></img>
+            </div>
           )}
         </div>
       </div>

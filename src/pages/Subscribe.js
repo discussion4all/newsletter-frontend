@@ -94,13 +94,13 @@ const Subscribe = (props) => {
   useEffect(() => {
     if (yearly.length > 0) {
       setYearlyCheckbox(true);
-      saveToLocalStorage("yearly", yearly);
+      // saveToLocalStorage("yearly", yearly);
     } else {
       setYearlyCheckbox(false);
     }
     if (monthly.length > 0) {
       setMonthlyCheckbox(true);
-      saveToLocalStorage("monthly", monthly);
+      // saveToLocalStorage("monthly", monthly);
     } else {
       setMonthlyCheckbox(false);
     }
