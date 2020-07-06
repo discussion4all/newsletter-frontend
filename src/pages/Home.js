@@ -1,6 +1,6 @@
 import React from "react";
 
-import NewletterForm from "./Form";
+import NewletterForm from "../components/Form";
 
 const Home = () => {
   return (

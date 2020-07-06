@@ -17,11 +17,12 @@ const saveToLocalStorage = (value) => {
 
 export const refillStore = () => (dispatch) => {
   const data = getFromLocalStorage("newsletterData");
-
-  dispatch({
-    type: SAVE_NEWSLETTER,
-    payload: data,
-  });
+  if (data) {
+    dispatch({
+      type: SAVE_NEWSLETTER,
+      payload: data,
+    });
+  }
 };
 
 const getFromLocalStorage = (key) => {

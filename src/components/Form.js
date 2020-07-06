@@ -70,8 +70,7 @@ const NewletterForm = (props) => {
       .then((res) => {
         if (res.data.message === "success") {
           history.push({
-            pathname: "/pay",
-            state: { title, description, mainImage, sampleText },
+            pathname: "/subscribe",
           });
         }
       })

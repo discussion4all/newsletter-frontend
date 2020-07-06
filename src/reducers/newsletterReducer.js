@@ -23,8 +23,12 @@ const newsletterReducer = (state = initialState, action) => {
         description,
         sampleText: html,
         blogPosterURL: imgURL,
-        payment,
+        payment: {
+          ...state.payment,
+          ...payment,
+        },
       };
+
       return newState;
 
     case SAVE_IN_LOCAL:

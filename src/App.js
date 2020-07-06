@@ -1,23 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import store from "./store";
 
-import Home from "./components/Home";
-import Payment from "./components/Payment";
+import { refillStore } from "./actions/newsletterActions";
 
-function App() {
+import Home from "./pages/Home";
+import Subscribe from "./pages/Subscribe";
+import PhoneEntry from "./pages/PhoneEntry";
+import Verification from "./pages/Verification";
+import Payment from "./pages/Payment";
+
+function App(props) {
+  useEffect(() => {
+    props.refillStore();
+  }, []);
   return (
-    <Provider store={store}>
-      <Router>
-        <Switch>
-          <Route path="/" exact render={(props) => <Home {...props} />} />
-          <Route path="/pay" render={(props) => <Payment {...props} />} />
-        </Switch>
-      </Router>
-    </Provider>
+    <Router>
+      <Switch>
+        <Route path="/" exact render={(props) => <Home {...props} />} />
+        <Route path="/subscribe" render={(props) => <Subscribe {...props} />} />
+        <Route
+          path="/phone-entry"
+          render={(props) => <PhoneEntry {...props} />}
+        />
+        <Route
+          path="/phone-verification"
+          render={(props) => <Verification {...props} />}
+        />
+        <Route path="/payment" render={(props) => <Payment {...props} />} />
+      </Switch>
+    </Router>
   );
 }
 
-export default App;
+export default connect(null, { refillStore })(App);

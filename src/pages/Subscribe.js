@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { BASE_URL } from "../config";
 import { refillStore, savePayment } from "../actions/newsletterActions";
 
-const Payment = (props) => {
-  const [yearly, setYearly] = useState(props.payment.yearly);
-  const [monthly, setMonthly] = useState(props.payment.monthly);
+const Subscribe = (props) => {
+  const [yearly, setYearly] = useState("");
+  const [monthly, setMonthly] = useState("");
   const [showMessage, setShowMessage] = useState(false);
   const [stripeConnected, setStripeConnected] = useState(false);
   //const [userId, setUserId] = useState(0);
@@ -32,6 +32,7 @@ const Payment = (props) => {
         props.savePayment(data);
         deleteFromLocalStorage("yearly");
         deleteFromLocalStorage("monthly");
+        props.history.push("/phone-entry");
       })
       .catch((err) => console.log(err));
   };
@@ -106,11 +107,25 @@ const Payment = (props) => {
   }, [yearly, monthly]);
 
   useEffect(() => {
-    props.refillStore();
-  }, []);
+    setMonthly(props.payment.monthly);
+    setYearly(props.payment.yearly);
+  }, [props.payment]);
+
+  // useEffect(() => {
+  //   props.refillStore();
+  // }, []);
 
   const STRIPE_URL =
     "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_HYMQTCYre4aXjrMlLSabe6otHE9znoen&scope=read_write";
+
+  const handleStripeConnect = () => {
+    const data = {
+      yearly: yearlyCheckbox ? yearly : "",
+      monthly: monthlyCheckbox ? monthly : "",
+    };
+    props.savePayment(data);
+    window.location.href = STRIPE_URL;
+  };
 
   let btnStyle = {};
   if (saveDisable) {
@@ -120,11 +135,6 @@ const Payment = (props) => {
       color: "#666666",
     };
   }
-
-  useEffect(() => {
-    setMonthly(props.payment.monthly);
-    setYearly(props.payment.yearly);
-  }, [props.payment]);
 
   const currencyFormat = (value) => {
     const updatedValue =
@@ -185,10 +195,10 @@ const Payment = (props) => {
           </div>
         </div>
         <div className="main-btn-box">
-          <a className="s-btn" href={STRIPE_URL}>
+          <button type="button" onClick={handleStripeConnect} className="s-btn">
             <i className="fab fa-stripe-s" style={{ marginRight: "5px" }}></i>{" "}
             {stripeConnected ? "Connected" : "Connect"} with Stripe
-          </a>
+          </button>
           <button
             className="save-btn bold"
             disabled={saveDisable}
@@ -223,7 +233,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { refillStore, savePayment })(Payment);
+export default connect(mapStateToProps, { refillStore, savePayment })(
+  Subscribe
+);
 
 const saveToLocalStorage = (key, value) => {
   localStorage.setItem(key, JSON.stringify(value));
