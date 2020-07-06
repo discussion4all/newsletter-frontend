@@ -59,7 +59,7 @@ const PhoneEntry = (props) => {
           {showSample && !sampleText && (
             <div className="vs-box">
               <p>"failture is success in progress." -- Albert Einstein</p>
-              <img src={dummy} class="vs-img"></img>
+              <img src={dummy} className="vs-img"></img>
             </div>
           )}
         </div>

@@ -4,7 +4,7 @@ import card from "../images/Card.jpg";
 
 const Payment = (props) => {
   const { title, description, blogPosterURL, payment } = props.newsletter;
-  console.log(payment);
+
   return (
     <div className="container">
       <div className="main-boxes">

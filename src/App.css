@@ -617,6 +617,7 @@ input::placeholder {
   width: 33px;
   margin: 0px 3px;
   height: 38px;
+  text-align: center;
 }
 .otp-input {
   margin-bottom: 20px;
