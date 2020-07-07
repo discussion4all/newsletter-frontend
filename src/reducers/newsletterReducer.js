@@ -1,4 +1,9 @@
-import { SAVE_NEWSLETTER, SAVE_IN_LOCAL, SAVE_PAYMENT } from "../actions/types";
+import {
+  SAVE_NEWSLETTER,
+  SAVE_IN_LOCAL,
+  SAVE_PAYMENT,
+  SAVE_PHONE_NUMBER,
+} from "../actions/types";
 
 const initialState = {
   savedInLocal: false,
@@ -10,12 +15,20 @@ const initialState = {
     monthly: "",
     yearly: "",
   },
+  phoneNumber: "",
 };
 
 const newsletterReducer = (state = initialState, action) => {
   switch (action.type) {
     case SAVE_NEWSLETTER:
-      const { title, description, html, imgURL, payment } = action.payload;
+      const {
+        title,
+        description,
+        html,
+        imgURL,
+        payment,
+        phoneNumber,
+      } = action.payload;
 
       let newState = {
         ...state,
@@ -27,6 +40,7 @@ const newsletterReducer = (state = initialState, action) => {
           ...state.payment,
           ...payment,
         },
+        phoneNumber,
       };
 
       return newState;
@@ -38,6 +52,9 @@ const newsletterReducer = (state = initialState, action) => {
       const { monthly, yearly } = action.payload;
       console.log(monthly, yearly);
       return { ...state, payment: { ...state.payment, monthly, yearly } };
+
+    case SAVE_PHONE_NUMBER:
+      return { ...state, phoneNumber: action.payload };
 
     default:
       return state;

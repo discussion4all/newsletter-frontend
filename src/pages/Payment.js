@@ -24,38 +24,43 @@ const Payment = (props) => {
             <i className="fa fa-angle-right" aria-hidden="true"></i>
           </span>
         </h2>
-        <div className="card-detail">
-          <div className="rad-btn">
-            <input type="radio" name="text" />
-            <span>Yearly</span>
-            <h1>{payment.yearly || "$0"}</h1>
-          </div>
-          <div className="rad-btn">
-            <input type="radio" name="text" />
-            <span>Monthly</span>
-            <h1>{payment.monthly || "$0"}</h1>
-          </div>
-          <div className="select-mod-1">
-            <div className="flex">
-              <div className="mod-flx">
-                <div className="mob-img">
-                  <img src={card} />
-                </div>
-                <div className="cr-num">
-                  <input type="text" name="text" placeholder="Credit Card" />
-                </div>
-              </div>
-              <div className="diflx">
-                <div className="date">
-                  <input type="text" name="text" placeholder="MM/YY" />
-                </div>
-                <div className="date cvv">
-                  <input type="text" name="text" placeholder="CVC" />
-                </div>
-              </div>
+        <div className="max-width-card">
+          <div className="card-detail">
+            <div className="rad-btn">
+              <input type="radio" name="text" />
+              <span>Yearly</span>
+              <h1>{payment.yearly || "$0"}</h1>
             </div>
-            <button>Subscribe</button>
+            <div className="rad-btn">
+              <input type="radio" name="text" />
+              <span>Monthly</span>
+              <h1>{payment.monthly || "$0"}</h1>
+            </div>
+            <div className="select-mod-1">
+              <div className="flex">
+                <div className="mod-flx">
+                  <div className="mob-img">
+                    <img src={card} />
+                  </div>
+                  <div className="cr-num">
+                    <input type="text" name="text" placeholder="Credit Card" />
+                  </div>
+                </div>
+                <div className="diflx">
+                  <div className="date">
+                    <input type="text" name="text" placeholder="MM/YY" />
+                  </div>
+                  <div className="date cvv">
+                    <input type="text" name="text" placeholder="CVC" />
+                  </div>
+                </div>
+              </div>
+              <button>Subscribe</button>
+            </div>
           </div>
+          <h1 className="v-error">
+            Credit card information is invalid. Try again
+          </h1>
         </div>
       </div>
     </div>

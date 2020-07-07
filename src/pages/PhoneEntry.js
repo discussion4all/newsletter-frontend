@@ -1,15 +1,33 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 import dummy from "../images/vs-img.jpg";
+import { BASE_URL } from "../config";
+import { savePhoneNumber } from "../actions/newsletterActions";
 
 const PhoneEntry = (props) => {
   const [showSample, setShowSample] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [countryCode, setCountryCode] = useState("+1");
+  const [showError, setShowError] = useState(false);
 
   const { title, description, blogPosterURL, sampleText } = props.newsletter;
 
-  const handleSignUp = () => {
-    props.history.push("/phone-verification");
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    props.savePhoneNumber(countryCode + phoneNumber);
+    axios
+      .post(`${BASE_URL}/send-code`, { phoneNumber: countryCode + phoneNumber })
+      .then((res) => {
+        if (res.data.message === "success") {
+          props.history.push("/phone-verification");
+        }
+        if (res.data.message === "invalid no") {
+          setShowError(true);
+        }
+      })
+      .catch((err) => console.log(err));
+    // props.history.push("/phone-verification");
   };
 
   const handlePhoneNumber = (e) => {
@@ -21,17 +39,18 @@ const PhoneEntry = (props) => {
       formated = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
         6
       )}`;
-      // formated = `(${value.slice(0, 3)}) ${value.slice(3)}`;
     } else if (value && value.length >= 4) {
-      // formated = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
-      //   6
-      // )}`;
       formated = `(${value.slice(0, 3)}) ${value.slice(3)}`;
     } else {
       formated = value;
     }
 
     setPhoneNumber(formated || "");
+  };
+
+  const handleCountryCode = (e) => {
+    console.log(e.target.value);
+    setCountryCode(e.target.value);
   };
 
   return (
@@ -57,9 +76,9 @@ const PhoneEntry = (props) => {
           <form onSubmit={handleSignUp}>
             <div className="flex">
               <div className="mod-flx">
-                <select>
-                  <option>+1</option>
-                  <option>+91</option>
+                <select onChange={handleCountryCode} value={countryCode}>
+                  <option value="+1">+1</option>
+                  <option value="+91">+91</option>
                 </select>
                 <input
                   type="text"
@@ -69,19 +88,23 @@ const PhoneEntry = (props) => {
                   maxLength="14"
                   minLength="14"
                   onChange={handlePhoneNumber}
+                  required
                 />
               </div>
               <button type="submit">Sign Up</button>
             </div>
           </form>
+          <div className="valid">
+            <a
+              href="#"
+              className="view-btn"
+              onClick={() => setShowSample(!showSample)}
+            >
+              view sample
+            </a>
+            {showError && <span>Enter a valid U.S phone number</span>}
+          </div>
 
-          <a
-            href="#"
-            className="view-btn"
-            onClick={() => setShowSample(!showSample)}
-          >
-            view sample
-          </a>
           {showSample && sampleText && (
             <div
               className="vs-box"
@@ -106,4 +129,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(PhoneEntry);
+export default connect(mapStateToProps, { savePhoneNumber })(PhoneEntry);

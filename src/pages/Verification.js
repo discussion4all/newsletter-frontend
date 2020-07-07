@@ -1,12 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../config";
 
 const Verification = (props) => {
-  const { title, description, blogPosterURL } = props.newsletter;
+  const { title, description, blogPosterURL, phoneNumber } = props.newsletter;
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
   const [third, setThird] = useState("");
   const [fourth, setFourth] = useState("");
+  const [showError, setShowError] = useState(false);
 
   const firstInput = useRef(null);
   const secondInput = useRef(null);
@@ -14,8 +17,27 @@ const Verification = (props) => {
   const fourthInput = useRef(null);
 
   const handleNext = () => {
-    props.history.push("/payment");
+    const code = first + second + third + fourth;
+    axios
+      .post(`${BASE_URL}/verify-code`, { code, phoneNumber })
+      .then((res) => {
+        console.log(res);
+        if (res.data.verifyStatus !== "approved") {
+          setShowError(true);
+          setFirst("");
+          setSecond("");
+          setThird("");
+          setFourth("");
+          return;
+        }
+        props.history.push("/payment");
+      })
+      .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    firstInput.current.focus();
+  }, []);
 
   useEffect(() => {
     if (first && second && third && fourth) {
@@ -71,6 +93,22 @@ const Verification = (props) => {
     }
   };
 
+  const handleSendAgain = () => {
+    console.log("cliked");
+    axios
+      .post(`${BASE_URL}/send-code`, { phoneNumber })
+      .then((res) => {
+        if (res.data.message === "success") {
+          // props.history.push("/phone-verification");
+          console.log("sent");
+        }
+        if (res.data.message === "invalid no") {
+          setShowError(true);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="container">
       <div className="main-boxes">
@@ -90,58 +128,73 @@ const Verification = (props) => {
             <i className="fa fa-angle-right" aria-hidden="true"></i>
           </span>
         </h2>
-        <div className="otp-detail">
-          <h1>
-            Code sent to <b>(555) 555-5555 </b>
-            <span
-              style={{ textDecoration: "underline", cursor: "pointer" }}
-              onClick={handleWrongNumber}
-            >
-              Wrong nunber?
-            </span>
-          </h1>
-          <div className="otp-input">
-            <input
-              type="text"
-              name="text"
-              maxLength="1"
-              minLength="1"
-              value={first}
-              onPaste={handlePaste}
-              ref={firstInput}
-              onChange={firstDigit}
-            />
-            <input
-              type="text"
-              name="text"
-              maxLength="1"
-              minLength="1"
-              value={second}
-              ref={secondInput}
-              onChange={secondDigit}
-            />
-            <input
-              type="text"
-              name="text"
-              maxLength="1"
-              minLength="1"
-              value={third}
-              ref={thirdInput}
-              onChange={thirdDigit}
-            />
-            <input
-              type="text"
-              name="text"
-              maxLength="1"
-              minLength="1"
-              value={fourth}
-              ref={fourthInput}
-              onChange={fourthDigit}
-            />
+        <div className="max-width-opt">
+          <div className="otp-detail">
+            <h1>
+              Code sent to <b>{phoneNumber.slice(3) || "(555) 555-5555"}</b>
+              <span
+                style={{
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                  marginLeft: "5px",
+                }}
+                onClick={handleWrongNumber}
+              >
+                Wrong nunber?
+              </span>
+            </h1>
+            <div className="otp-input">
+              <input
+                type="text"
+                name="text"
+                maxLength="1"
+                minLength="1"
+                value={first}
+                onPaste={handlePaste}
+                ref={firstInput}
+                onChange={firstDigit}
+              />
+              <input
+                type="text"
+                name="text"
+                maxLength="1"
+                minLength="1"
+                value={second}
+                ref={secondInput}
+                onChange={secondDigit}
+              />
+              <input
+                type="text"
+                name="text"
+                maxLength="1"
+                minLength="1"
+                value={third}
+                ref={thirdInput}
+                onChange={thirdDigit}
+              />
+              <input
+                type="text"
+                name="text"
+                maxLength="1"
+                minLength="1"
+                value={fourth}
+                ref={fourthInput}
+                onChange={fourthDigit}
+              />
+            </div>
+            <p>
+              Didn't receive it?{" "}
+              <a href="#" onClick={handleSendAgain}>
+                Send again
+              </a>
+            </p>
           </div>
-          <p>
-            Didn't receive it? <a href="#">Send again</a>
-          </p>
+
+          {showError && (
+            <h1 class="v-error" style={{ margin: "0 10px" }}>
+              Code is incorrect Try again
+            </h1>
+          )}
         </div>
       </div>
     </div>

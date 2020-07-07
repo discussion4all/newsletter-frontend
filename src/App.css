@@ -634,7 +634,7 @@ input::placeholder {
 .vs-box {
   border: 2px solid #78bbef;
   padding: 15px;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 .main-boxes .vs-box p {
   font-size: 18px;
@@ -707,4 +707,33 @@ input::placeholder {
     width: 1140px;
     margin: 0 auto;
   }
+}
+
+.valid {
+  margin-top: 12px;
+}
+.valid a {
+  display: inline-block;
+  float: left;
+}
+.valid span {
+  float: right;
+  font-style: italic;
+  color: #bd0303;
+}
+.v-error {
+  font-style: italic;
+  color: #bd0303;
+  font-weight: normal !important;
+  font-size: 16px !important;
+  text-align: left;
+  margin-top: 5px !important;
+}
+.max-width-opt {
+  max-width: 370px;
+  margin: 0 auto;
+}
+.max-width-card {
+  max-width: 500px;
+  margin: 0 auto;
 }
