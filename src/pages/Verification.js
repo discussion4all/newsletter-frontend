@@ -28,6 +28,7 @@ const Verification = (props) => {
           setSecond("");
           setThird("");
           setFourth("");
+          firstInput.current.focus();
           return;
         }
         props.history.push("/payment");
@@ -101,6 +102,7 @@ const Verification = (props) => {
         if (res.data.message === "success") {
           // props.history.push("/phone-verification");
           console.log("sent");
+          firstInput.current.focus();
         }
         if (res.data.message === "invalid no") {
           setShowError(true);
