@@ -4,12 +4,16 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { refillStore } from "./actions/newsletterActions";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 import Home from "./pages/Home";
 import Subscribe from "./pages/Subscribe";
 import PhoneEntry from "./pages/PhoneEntry";
 import Verification from "./pages/Verification";
 import Payment from "./pages/Payment";
+
+const stripePromise = loadStripe("pk_test_KSl2TTYS8jeNiqowiHC27tHj00HaabhIdR");
 
 function App(props) {
   useEffect(() => {
@@ -28,7 +32,14 @@ function App(props) {
           path="/phone-verification"
           render={(props) => <Verification {...props} />}
         />
-        <Route path="/payment" render={(props) => <Payment {...props} />} />
+        <Route
+          path="/payment"
+          render={(props) => (
+            <Elements stripe={stripePromise}>
+              <Payment {...props} />
+            </Elements>
+          )}
+        />
       </Switch>
     </Router>
   );
