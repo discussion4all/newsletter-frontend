@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import dummy from "../images/vs-img.jpg";
 import { BASE_URL } from "../config";
-import { savePhoneNumber } from "../actions/newsletterActions";
+import { savePhoneNumber, saveNewsletter } from "../actions/newsletterActions";
 
 const PhoneEntry = (props) => {
   const [showSample, setShowSample] = useState(false);
@@ -11,7 +11,36 @@ const PhoneEntry = (props) => {
   const [countryCode, setCountryCode] = useState("+1");
   const [showError, setShowError] = useState(false);
 
-  const { title, description, blogPosterURL, sampleText } = props.newsletter;
+  const {
+    title,
+    description,
+    blogPosterURL,
+    sampleText,
+    payment,
+  } = props.newsletter;
+
+  useEffect(() => {
+    axios.get(`${BASE_URL}/get-record/${props.match.params.id}`).then((res) => {
+      const {
+        description,
+        imageUrl,
+        newsletterId,
+        sampleText,
+        title,
+      } = res.data.data;
+
+      props.saveNewsletter({
+        title,
+        description,
+        html: sampleText,
+        imgURL: imageUrl,
+        newsletterId,
+        payment,
+      });
+
+      console.log(res.data);
+    });
+  }, [props.match.params.id]);
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -20,7 +49,7 @@ const PhoneEntry = (props) => {
       .post(`${BASE_URL}/send-code`, { phoneNumber: countryCode + phoneNumber })
       .then((res) => {
         if (res.data.message === "success") {
-          props.history.push("/phone-verification");
+          props.history.push(`/phone-verification`);
         }
         if (res.data.message === "invalid no") {
           setShowError(true);
@@ -53,6 +82,7 @@ const PhoneEntry = (props) => {
     setCountryCode(e.target.value);
   };
 
+  console.log(props.match.params.id);
   return (
     <div className="container">
       <div className="main-boxes">
@@ -129,4 +159,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { savePhoneNumber })(PhoneEntry);
+export default connect(mapStateToProps, { savePhoneNumber, saveNewsletter })(
+  PhoneEntry
+);

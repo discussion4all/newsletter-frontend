@@ -133,7 +133,8 @@ const Verification = (props) => {
         <div className="max-width-opt">
           <div className="otp-detail">
             <h1>
-              Code sent to <b>{phoneNumber.slice(3) || "(555) 555-5555"}</b>
+              Code sent to{" "}
+              <b>{(phoneNumber && phoneNumber.slice(3)) || "(555) 555-5555"}</b>
               <span
                 style={{
                   textDecoration: "underline",

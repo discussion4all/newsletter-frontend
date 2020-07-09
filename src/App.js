@@ -25,7 +25,7 @@ function App(props) {
         <Route path="/" exact render={(props) => <Home {...props} />} />
         <Route path="/subscribe" render={(props) => <Subscribe {...props} />} />
         <Route
-          path="/phone-entry"
+          path="/phone-entry/:id"
           render={(props) => <PhoneEntry {...props} />}
         />
         <Route

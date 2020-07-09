@@ -2,15 +2,24 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import card from "../images/Card.jpg";
 import axios from "axios";
-import { BASE_URL } from "../config";
-import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { BASE_URL, FRONT_BASE_URL } from "../config";
+import {
+  useStripe,
+  useElements,
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+} from "@stripe/react-stripe-js";
+import Modal from "react-bootstrap/Modal";
 
 const Payment = (props) => {
   const { title, description, blogPosterURL, payment } = props.newsletter;
-  const [cardValue, setCardValue] = useState("");
-  const [date, setDate] = useState("");
-  const [cvc, setCvc] = useState("");
   const [selected, setSelected] = useState("monthly");
+  const [showModal, setShowModal] = useState(false);
+  const [showCardInvalid, setShowCardInvalid] = useState(false);
+  const [cardNumberRef, setCardNumberRef] = useState(null);
+  const [cardExpiryRef, setCardExpiryRef] = useState(null);
+  const [cardCvcRef, setCardCvcRef] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -21,53 +30,51 @@ const Payment = (props) => {
     }
   }, [payment]);
 
+  useEffect(() => {
+    cardNumberRef && cardNumberRef.focus();
+  }, [cardNumberRef]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setShowCardInvalid(false);
 
-    const data = {
-      cardNo: cardValue,
-      date,
-      cvc,
-      pay: payment[selected],
-    };
+    const card = elements.getElement(
+      CardNumberElement,
+      CardExpiryElement,
+      CardCvcElement
+    );
 
-    const card = elements.getElement(CardElement);
-    console.log("card", card);
     const result = await stripe.createToken(card);
 
-    data.token = result.token.id;
+    if (result.hasOwnProperty("error")) {
+      console.log("show error...");
+      setShowCardInvalid(true);
+      return;
+    }
 
-    console.log("result", data);
-    axios
-      .post(`${BASE_URL}/charge-card`, data)
-      .then((res) => {
+    const data = {
+      pay: payment[selected],
+      token: result.token.id,
+    };
+
+    console.log("data to send...", data);
+
+    try {
+      axios.post(`${BASE_URL}/charge-card`, data).then((res) => {
         console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
+        if (res.data.charge && res.data.charge.status === "succeeded") {
+          console.log("payment made...", res.data);
+          setShowModal(true);
+          cardNumberRef.clear();
+          cardExpiryRef.clear();
+          cardCvcRef.clear();
+        } else {
+          setShowCardInvalid(true);
+        }
       });
-  };
-
-  const handleCardNumber = (e) => {
-    let { value } = e.target;
-    let card = value.match(/[0-9]/g) && value.match(/[0-9]/g).join("");
-    let formattedNumber = formatCardNumber(card);
-
-    setCardValue(formattedNumber || "");
-  };
-
-  const handleDate = (e) => {
-    let { value } = e.target;
-    let num = value.match(/[0-9]/g) && value.match(/[0-9]/g).join("");
-    let formattedDate = formatDate(num);
-
-    setDate(formattedDate || "");
-  };
-
-  const handleCvc = (e) => {
-    let { value } = e.target;
-    let num = value.match(/[0-9]/g) && value.match(/[0-9]/g).join("");
-    setCvc(num);
+    } catch (err) {
+      setShowCardInvalid(true);
+    }
   };
 
   const handlePeriod = (e) => {
@@ -76,6 +83,36 @@ const Payment = (props) => {
 
   return (
     <div className="container">
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <div className="close-card">
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModal(false)}
+          >
+            ×
+          </button>
+        </div>
+        <div>
+          <div>
+            <div className="modal-body text-block">
+              <h1>You're subscribed!</h1>
+              <p>Share this newslatter with others..</p>
+              <div className="flex">
+                <div className="mod-flx">
+                  <input
+                    type="text"
+                    name="text"
+                    value={`${FRONT_BASE_URL}/phone-entry/${props.newsletter.newsletterId}`}
+                    onChange={() => {}}
+                  />
+                </div>
+                <button>Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
       <div className="main-boxes">
         <div
           className="cir"
@@ -125,68 +162,34 @@ const Payment = (props) => {
                       <img src={card} alt="card" />
                     </div>
                     <div className="cr-num">
-                      <input
-                        type="text"
-                        name="text"
-                        placeholder="Credit Card"
-                        required
-                        value={cardValue}
-                        onChange={handleCardNumber}
-                        minLength="19"
-                        maxLength="19"
-                      />
+                      <CardNumberElement onReady={(e) => setCardNumberRef(e)} />
                     </div>
                   </div>
                   <div className="diflx">
                     <div className="date">
-                      <input
-                        type="text"
-                        name="text"
-                        placeholder="MM/YY"
-                        minLength="5"
-                        maxLength="5"
-                        value={date}
-                        onChange={handleDate}
-                        required
-                      />
+                      <CardExpiryElement onReady={(e) => setCardExpiryRef(e)} />
                     </div>
                     <div className="date cvv">
-                      <input
-                        type="text"
-                        name="text"
-                        placeholder="CVC"
-                        maxLength="3"
-                        minLength="3"
-                        value={cvc}
-                        onChange={handleCvc}
-                        required
-                      />
+                      <CardCvcElement onReady={(e) => setCardCvcRef(e)} />
                     </div>
                   </div>
                 </div>
-                <CardElement />
+
                 <button type="submit" style={{ cursor: "pointer" }}>
                   Subscribe
                 </button>
               </div>
             </form>
           </div>
-
-          <h1 className="v-error">
-            Credit card information is invalid. Try again
-          </h1>
+          {showCardInvalid && (
+            <h1 className="v-error">
+              Credit card information is invalid. Try again
+            </h1>
+          )}
         </div>
       </div>
     </div>
   );
-};
-
-const formatCardNumber = (num) => {
-  return num && num.match(/.{1,4}/g).join("-");
-};
-
-const formatDate = (date) => {
-  return date && date.match(/.{1,2}/g).join("/");
 };
 
 const mapStateToProps = (state) => {

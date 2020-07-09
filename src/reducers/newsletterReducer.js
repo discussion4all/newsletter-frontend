@@ -6,6 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
+  newsletterId: undefined,
   savedInLocal: false,
   title: "",
   description: "",
@@ -28,7 +29,10 @@ const newsletterReducer = (state = initialState, action) => {
         imgURL,
         payment,
         phoneNumber,
+        newsletterId,
       } = action.payload;
+
+      console.log("old", state);
 
       let newState = {
         ...state,
@@ -41,7 +45,10 @@ const newsletterReducer = (state = initialState, action) => {
           ...payment,
         },
         phoneNumber,
+        newsletterId,
       };
+
+      console.log("new", newState);
 
       return newState;
 

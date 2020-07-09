@@ -32,7 +32,7 @@ const Subscribe = (props) => {
         props.savePayment(data);
         deleteFromLocalStorage("yearly");
         deleteFromLocalStorage("monthly");
-        props.history.push("/phone-entry");
+        props.history.push(`/phone-entry/${props.newsletterId}`);
       })
       .catch((err) => console.log(err));
   };
@@ -230,6 +230,7 @@ const mapStateToProps = (state) => {
   return {
     title: state.newsletter.title,
     payment: state.newsletter.payment,
+    newsletterId: state.newsletter.newsletterId,
   };
 };
 

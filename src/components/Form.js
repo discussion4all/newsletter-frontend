@@ -59,9 +59,19 @@ const NewletterForm = (props) => {
   const submit = (event) => {
     event.preventDefault();
     console.log(description, html, resMainImage);
-    props.saveNewsletter({ title, description, html, imgURL: resMainImage });
+    const newsletterId = Math.floor(Math.random() * 1000000);
+
+    props.saveNewsletter({
+      title,
+      description,
+      html,
+      imgURL: resMainImage,
+      newsletterId,
+    });
+
     axios
       .post(`${BASE_URL}/create`, {
+        newsletterId,
         image: resMainImage,
         title,
         description,

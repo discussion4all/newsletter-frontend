@@ -538,8 +538,9 @@ input::placeholder {
 }
 .mob-img {
   border: none;
+  line-height: 38px;
   float: left;
-  padding: 10px;
+  padding: 0 10px;
   border: 1px solid #767676;
   border-right: 0;
 }
@@ -547,7 +548,11 @@ input::placeholder {
   width: 45%;
   margin-left: 15px;
 }
-
+.date .StripeElement {
+  border: 1px solid #767676;
+  padding: 11px 10px;
+  height: 40px;
+}
 .select-mod-1 .flex {
   width: 100%;
 }
@@ -574,6 +579,7 @@ input::placeholder {
 }
 .diflx {
   display: flex;
+  width: 50%;
 }
 .cr-num input {
   min-height: 40px;
@@ -640,6 +646,22 @@ input::placeholder {
   font-size: 18px;
 }
 
+/* .select-mod-1 a {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  min-height: 40px;
+  border: none;
+  margin-top: 15px;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 500;
+  display: block;
+  text-align: center;
+  line-height: 40px;
+  text-decoration: none;
+} */
+
 @media (max-width: 576px) {
   .select-mod span input {
     min-height: 42px;
@@ -667,15 +689,18 @@ input::placeholder {
   .date {
     width: 50%;
     margin-left: 0px;
-    padding: 0px 7.5px;
+    padding-right: 7.5px;
+    box-sizing: border-box;
   }
   .date.cvv {
     width: 50%;
     padding: 0px 7.5px;
+    padding-left: 7.5px;
+    padding-right: 0px;
   }
   .diflx {
     display: flex;
-    margin: 0px -7.5px;
+    width: 100%;
   }
   .rad-btn span {
     min-width: 22%;
@@ -737,3 +762,120 @@ input::placeholder {
   max-width: 500px;
   margin: 0 auto;
 }
+
+/* Modal */
+/* .modal {
+  display: none;
+  vertical-align: middle;
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+  box-sizing: border-box;
+  width: 90%;
+  background: #fff;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 10px #000;
+  -moz-box-shadow: 0 0 10px #000;
+  -o-box-shadow: 0 0 10px #000;
+  -ms-box-shadow: 0 0 10px #000;
+  box-shadow: 0 0 10px #000;
+  text-align: left;
+} */
+.modal {
+  top: 30%;
+}
+.modal a.close-modal {
+  position: absolute;
+  top: -12.5px;
+  right: -12.5px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-indent: -9999px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==");
+}
+.modal-body.text-block {
+  text-align: center;
+  text-align: center;
+  padding: 45px 70px;
+  padding-top: 5px;
+}
+.modal-body.text-block .flex {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-body.text-block h1 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.modal.card-modal {
+  top: 26%;
+}
+.modal-body.text-block p {
+  font-size: 19px;
+  color: #676767;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.card-modal .modal-dialog {
+  width: 500px;
+}
+.modal-body.text-block .flex button {
+  width: 20%;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+button.close {
+  color: #000;
+  opacity: 1;
+  margin: 8px;
+}
+.card-modal .modal-content {
+  box-shadow: none;
+  border: none;
+}
+
+/* for stripe payment inputs */
+.cr-num .StripeElement {
+  border: 1px solid #767676;
+  padding: 11px 10px;
+  height: 40px;
+  line-height: 40px;
+}
+/*
+
+.CardBrandIcon-container {
+  border: 1px solid #767676;
+  width: 100%;
+  height: 40px;
+  left: 42px;
+  position: static;
+  line-height: 40px;
+}
+.CardField.CardField--ltr {
+  display: flex;
+}
+.CardBrandIcon img,
+.CardBrandIcon svg {
+  position: static;
+  padding: 0px;
+}
+iframe {
+  height: 40px !important;
+}
+.CardField-input-wrapper.is-ready-to-slide {
+  position: static;
+  display: flex;
+} */
