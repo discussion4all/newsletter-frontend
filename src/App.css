@@ -73,6 +73,7 @@ label.file img {
 .up-box {
   border: 2px solid black;
   display: flex;
+  height: 37px;
   /* margin-bottom: 20px; */
 }
 .icon-box {
@@ -123,7 +124,7 @@ textarea:focus {
 .upload-box input {
   border: none;
   min-height: 32px;
-  width: 77%;
+  width: 81%;
   padding: 0px 10px;
   border-left: 2px solid black;
 
@@ -134,7 +135,7 @@ textarea:focus {
 }
 .upload-box button {
   float: right;
-  padding: 10px 22px;
+  padding: 6px 22px;
   border: none;
   background-color: #000;
   color: #fff;

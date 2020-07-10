@@ -120,7 +120,7 @@ const NewletterForm = (props) => {
 
   const createImgTag = (url) => {
     console.log(url);
-    return ` <img src=${url} width=50px height="50px alt="small image" style="margin: 0 5px;" /> `;
+    return ` <img src=${url} alt="small image" style="margin: 0 5px; height: 50px; width: 50px" /> `;
   };
 
   const uploadImageInText = (image) => {
@@ -169,25 +169,30 @@ const NewletterForm = (props) => {
     console.log(checkUrlValidity);
 
     if (checkUrlValidity === "valid") {
-      setSelectedBtn("add");
       axios
         .post(`${BASE_URL}/short-link`, { link: addText })
         .then((res) => {
-          console.log(res);
-          let newString = sampleText + res.data.link + " ";
-          // console.log("html", html);
-          // console.log("POST", position);
-          // // console.log(html.slice(0, position));
-          // const firstHalf = html.slice(0, position);
-          // const lastHalf = html.slice(position);
-          // // console.log(firstHalf + " % " + lastHalf);
-          // // console.log(html, html[position - 1], position);
+          if (res.data.link) {
+            setSelectedBtn("add");
+            console.log(res);
+            let newString = sampleText + res.data.link + " ";
+            // console.log("html", html);
+            // console.log("POST", position);
+            // // console.log(html.slice(0, position));
+            // const firstHalf = html.slice(0, position);
+            // const lastHalf = html.slice(position);
+            // // console.log(firstHalf + " % " + lastHalf);
+            // // console.log(html, html[position - 1], position);
 
-          // setHtml(firstHalf + " " + newString + " " + lastHalf);
+            // setHtml(firstHalf + " " + newString + " " + lastHalf);
 
-          setHtml(html + " " + res.data.link);
-          setAddText("");
-          sampleInput.current.focus();
+            setHtml(html + " " + res.data.link);
+            setAddText("");
+            sampleInput.current.focus();
+          }
+          if (res.data.message === "invalid") {
+            setAddText("");
+          }
         })
         .catch((err) => console.log(err));
     } else {
