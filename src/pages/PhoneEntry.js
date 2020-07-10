@@ -21,30 +21,30 @@ const PhoneEntry = (props) => {
 
   useEffect(() => {
     axios.get(`${BASE_URL}/get-record/${props.match.params.id}`).then((res) => {
-      const {
-        description,
-        imageUrl,
-        newsletterId,
-        sampleText,
-        title,
-        monthlyPrice,
-        yearlyPrice,
-      } = res.data.data;
+      if (res.data.data) {
+        const {
+          description,
+          imageUrl,
+          newsletterId,
+          sampleText,
+          title,
+          monthlyPrice,
+          yearlyPrice,
+        } = res.data.data;
 
-      props.saveNewsletter({
-        title,
-        description,
-        html: sampleText,
-        imgURL: imageUrl,
-        newsletterId,
-        payment: {
-          ...payment,
-          monthly: monthlyPrice,
-          yearly: yearlyPrice,
-        },
-      });
-
-      console.log(res.data);
+        props.saveNewsletter({
+          title,
+          description,
+          html: sampleText,
+          imgURL: imageUrl,
+          newsletterId,
+          payment: {
+            ...payment,
+            monthly: monthlyPrice,
+            yearly: yearlyPrice,
+          },
+        });
+      }
     });
   }, [props.match.params.id]);
 
@@ -66,9 +66,13 @@ const PhoneEntry = (props) => {
   };
 
   const handlePhoneNumber = (e) => {
+    const maxLengthMatch = e.target.value.match(/[0-9() -]{15}/);
+    if (maxLengthMatch) {
+      return;
+    }
     const value =
       e.target.value.match(/[0-9]/g) && e.target.value.match(/[0-9]/g).join("");
-    console.log("value", value);
+    // console.log("value", value);
     let formated;
     if (value && value.length >= 7) {
       formated = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
@@ -88,7 +92,6 @@ const PhoneEntry = (props) => {
     setCountryCode(e.target.value);
   };
 
-  console.log(props.match.params.id);
   return (
     <div className="container">
       <div className="main-boxes">
@@ -112,7 +115,11 @@ const PhoneEntry = (props) => {
           <form onSubmit={handleSignUp}>
             <div className="flex">
               <div className="mod-flx">
-                <select onChange={handleCountryCode} value={countryCode}>
+                <select
+                  onChange={handleCountryCode}
+                  value={countryCode}
+                  style={{ fontSize: "1rem" }}
+                >
                   <option value="+1">+1</option>
                   <option value="+91">+91</option>
                 </select>
@@ -121,10 +128,8 @@ const PhoneEntry = (props) => {
                   name="text"
                   value={phoneNumber}
                   placeholder="(555) 555-5555"
-                  maxLength="14"
-                  minLength="14"
                   onChange={handlePhoneNumber}
-                  required
+                  style={{ fontSize: "1rem" }}
                 />
               </div>
               <button type="submit">Sign Up</button>
@@ -135,10 +140,11 @@ const PhoneEntry = (props) => {
               href="#"
               className="view-btn"
               onClick={() => setShowSample(!showSample)}
+              style={{ fontSize: "1rem" }}
             >
               view sample
             </a>
-            {showError && <span>Enter a valid U.S phone number</span>}
+            {showError && <span>Enter a valid U.S. phone number.</span>}
           </div>
 
           {showSample && sampleText && (
@@ -149,7 +155,9 @@ const PhoneEntry = (props) => {
           )}
           {showSample && !sampleText && (
             <div className="vs-box">
-              <p>"failture is success in progress." -- Albert Einstein</p>
+              <p style={{ fontSize: "1rem" }}>
+                "failture is success in progress." -- Albert Einstein
+              </p>
               <img src={dummy} className="vs-img"></img>
             </div>
           )}

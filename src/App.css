@@ -254,14 +254,15 @@ body {
 }
 .cus-che {
   position: relative;
+  margin-right: 8px;
 }
 .checkmark {
-  width: 43px;
-  height: 50px;
+  width: 10px;
+  height: 12px;
   display: none;
   position: absolute;
-  top: 7px;
-  left: 7px;
+  top: 10px;
+  left: 3px;
   text-align: center;
   background-repeat: no-repeat;
   background-image: url(./images//check.png);
@@ -491,14 +492,15 @@ select::-ms-expand {
   text-align: left;
   color: #000;
   font-size: 18px;
-  margin-top: 7px;
 }
 .mod-flx input {
   width: 100%;
   padding: 0px 15px;
   padding-top: 3px;
 }
-
+.vs-box img {
+  width: 100%;
+}
 /*--------------------*/
 
 input::placeholder {
@@ -745,6 +747,7 @@ input::placeholder {
   float: right;
   font-style: italic;
   color: #bd0303;
+  font-weight: 600;
 }
 .v-error {
   font-style: italic;
