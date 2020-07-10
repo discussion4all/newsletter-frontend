@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import card from "../images/Card.jpg";
 import axios from "axios";
@@ -22,6 +22,7 @@ const Payment = (props) => {
   const [cardCvcRef, setCardCvcRef] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
+  const copyInputRef = useRef(null);
 
   useEffect(() => {
     if (payment.yearly !== "") {
@@ -81,6 +82,13 @@ const Payment = (props) => {
     setSelected(e.target.value);
   };
 
+  const handleCopy = () => {
+    console.log(copyInputRef);
+    copyInputRef.current.select();
+    copyInputRef.current.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+  };
+
   return (
     <div className="container">
       <Modal show={showModal} onHide={() => setShowModal(false)}>
@@ -102,12 +110,15 @@ const Payment = (props) => {
                 <div className="mod-flx">
                   <input
                     type="text"
+                    ref={copyInputRef}
                     name="text"
                     value={`${FRONT_BASE_URL}/phone-entry/${props.newsletter.newsletterId}`}
                     onChange={() => {}}
                   />
                 </div>
-                <button>Copy</button>
+                <button type="button" onClick={handleCopy}>
+                  Copy
+                </button>
               </div>
             </div>
           </div>

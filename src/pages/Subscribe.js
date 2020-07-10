@@ -21,6 +21,7 @@ const Subscribe = (props) => {
     // setUserId(id);
     console.log("clicked");
     const data = {
+      newsletterId: props.newsletterId,
       yearly: yearlyCheckbox ? yearly : "",
       monthly: monthlyCheckbox ? monthly : "",
     };

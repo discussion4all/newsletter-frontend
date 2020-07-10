@@ -27,6 +27,8 @@ const PhoneEntry = (props) => {
         newsletterId,
         sampleText,
         title,
+        monthlyPrice,
+        yearlyPrice,
       } = res.data.data;
 
       props.saveNewsletter({
@@ -35,7 +37,11 @@ const PhoneEntry = (props) => {
         html: sampleText,
         imgURL: imageUrl,
         newsletterId,
-        payment,
+        payment: {
+          ...payment,
+          monthly: monthlyPrice,
+          yearly: yearlyPrice,
+        },
       });
 
       console.log(res.data);
