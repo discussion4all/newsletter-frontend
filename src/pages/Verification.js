@@ -16,6 +16,7 @@ const Verification = (props) => {
   const [third, setThird] = useState("");
   const [fourth, setFourth] = useState("");
   const [showError, setShowError] = useState(false);
+  const [countClick, setCountClick] = useState(0);
 
   const firstInput = useRef(null);
   const secondInput = useRef(null);
@@ -101,6 +102,7 @@ const Verification = (props) => {
   };
 
   const handleSendAgain = () => {
+    setCountClick(countClick + 1);
     console.log("cliked");
     axios
       .post(`${BASE_URL}/send-code`, { phoneNumber })
@@ -193,9 +195,13 @@ const Verification = (props) => {
             </div>
             <p>
               Didn't receive it?{" "}
-              <a href="#" onClick={handleSendAgain}>
+              <button
+                className="send-again"
+                onClick={handleSendAgain}
+                disabled={countClick >= 3}
+              >
                 Send again
-              </a>
+              </button>
             </p>
           </div>
 

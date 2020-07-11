@@ -737,6 +737,12 @@ input::placeholder {
   }
 }
 
+.send-again {
+  background: none;
+  border: none;
+  text-decoration: underline;
+}
+
 .valid {
   margin-top: 12px;
 }
