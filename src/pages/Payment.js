@@ -20,6 +20,7 @@ const Payment = (props) => {
   const [cardNumberRef, setCardNumberRef] = useState(null);
   const [cardExpiryRef, setCardExpiryRef] = useState(null);
   const [cardCvcRef, setCardCvcRef] = useState(null);
+  const [btnTitle, setBtnTitle] = useState("Copy to clipboard");
   const stripe = useStripe();
   const elements = useElements();
   const copyInputRef = useRef(null);
@@ -87,6 +88,7 @@ const Payment = (props) => {
     copyInputRef.current.select();
     copyInputRef.current.setSelectionRange(0, 99999);
     document.execCommand("copy");
+    setBtnTitle("Copied!");
   };
 
   return (
@@ -116,9 +118,18 @@ const Payment = (props) => {
                     onChange={() => {}}
                   />
                 </div>
-                <button type="button" onClick={handleCopy}>
-                  Copy
-                </button>
+                <div className="tooltip">
+                  <button
+                    type="button"
+                    onClick={handleCopy}
+                    onMouseOut={() => setBtnTitle("Copy to clipboard")}
+                  >
+                    <span className="tooltiptext" id="myTooltip">
+                      {btnTitle}
+                    </span>
+                    Copy
+                  </button>
+                </div>
               </div>
             </div>
           </div>

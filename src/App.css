@@ -835,11 +835,12 @@ input::placeholder {
   width: 500px;
 }
 .modal-body.text-block .flex button {
-  width: 20%;
   background-color: #000;
   color: #fff;
   border: none;
   cursor: pointer;
+  height: 100%;
+  width: 60px;
 }
 button.close {
   color: #000;
@@ -860,26 +861,42 @@ button.close {
 }
 /*
 
-.CardBrandIcon-container {
-  border: 1px solid #767676;
-  width: 100%;
-  height: 40px;
-  left: 42px;
-  position: static;
-  line-height: 40px;
+/* tooltip copy button */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  opacity: 1;
 }
-.CardField.CardField--ltr {
-  display: flex;
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 130%;
+  left: 50%;
+  margin-left: -70px;
+  opacity: 0;
+  transition: opacity 0.3s;
 }
-.CardBrandIcon img,
-.CardBrandIcon svg {
-  position: static;
-  padding: 0px;
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
 }
-iframe {
-  height: 40px !important;
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
-.CardField-input-wrapper.is-ready-to-slide {
-  position: static;
-  display: flex;
-} */
