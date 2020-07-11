@@ -4,7 +4,13 @@ import axios from "axios";
 import { BASE_URL } from "../config";
 
 const Verification = (props) => {
-  const { title, description, blogPosterURL, phoneNumber } = props.newsletter;
+  const {
+    title,
+    description,
+    blogPosterURL,
+    phoneNumber,
+    newsletterId,
+  } = props.newsletter;
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
   const [third, setThird] = useState("");
@@ -47,7 +53,7 @@ const Verification = (props) => {
   }, [first, second, third, fourth]);
 
   const handleWrongNumber = () => {
-    props.history.push("/phone-entry");
+    props.history.push(`/phone-entry/${newsletterId}`);
   };
 
   const firstDigit = (e) => {
@@ -194,7 +200,7 @@ const Verification = (props) => {
           </div>
 
           {showError && (
-            <h1 class="v-error" style={{ margin: "0 10px" }}>
+            <h1 class="v-error" style={{ margin: "0 10px", fontWeight: "600" }}>
               Code is incorrect Try again
             </h1>
           )}

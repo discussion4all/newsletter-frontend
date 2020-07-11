@@ -606,7 +606,7 @@ input::placeholder {
 /*---------*/
 
 .otp-detail {
-  max-width: 320px;
+  max-width: 360px;
   border: 1px solid #c9c7c9;
   border-radius: 3px;
   padding: 15px;
@@ -753,7 +753,6 @@ input::placeholder {
 .v-error {
   font-style: italic;
   color: #bd0303;
-  font-weight: normal !important;
   font-size: 16px !important;
   text-align: left;
   margin-top: 5px !important;
