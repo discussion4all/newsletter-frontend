@@ -83,6 +83,7 @@ label.file img {
   border-bottom: none;
 }
 .icon-box button {
+  padding-left: 0;
   width: 48%;
 
   background-color: transparent;
@@ -204,7 +205,9 @@ textarea:focus {
 /*.file-custom:after {
     content: "Choose file...";
 }*/
-
+.container {
+  margin-top: 1rem !important;
+}
 @media (min-width: 992px) {
   .container {
     width: 970px;
@@ -427,7 +430,7 @@ body {
   background-size: cover;
 }
 .main-boxes {
-  margin: 100px 0px;
+  margin: 3rem 0px;
   text-align: center;
 }
 .main-boxes h1 {
@@ -457,6 +460,7 @@ select {
   padding: 0px 10px;
   border: 1px solid;
   border-right: 0;
+  border-radius: 6px 0 0 6px;
 }
 
 .select-mod button {
@@ -468,6 +472,7 @@ select {
   width: 142px;
   font-size: 16px;
   cursor: pointer;
+  border-radius: 0px 6px 6px 0px;
 }
 .select-mod {
   max-width: 478px;
@@ -493,6 +498,7 @@ select::-ms-expand {
   text-align: left;
   color: #000;
   font-size: 18px;
+  text-decoration: underline;
 }
 .mod-flx input {
   width: 100%;
@@ -527,6 +533,7 @@ input::placeholder {
 .rad-btn {
   display: flex;
   margin-bottom: 10px;
+  align-items: center;
 }
 .card-detail .rad-btn h1 {
   margin: 0;
@@ -537,7 +544,7 @@ input::placeholder {
   text-align: left;
   margin-left: 5px;
   font-weight: 600;
-  color: #646264;
+  color: black;
 }
 .mob-img {
   border: none;
@@ -616,7 +623,7 @@ input::placeholder {
 .main-boxes .otp-detail h1 {
   margin: 0;
   font-size: 15px;
-  color: #4f4e50;
+  color: black;
   font-weight: 500;
   margin-bottom: 15px;
 }
@@ -736,13 +743,11 @@ input::placeholder {
     margin: 0 auto;
   }
 }
-
 .send-again {
   background: none;
   border: none;
   text-decoration: underline;
 }
-
 .valid {
   margin-top: 12px;
 }
@@ -754,7 +759,7 @@ input::placeholder {
   float: right;
   font-style: italic;
   color: #bd0303;
-  font-weight: 600;
+  font-weight: 700;
 }
 .v-error {
   font-style: italic;
@@ -762,6 +767,7 @@ input::placeholder {
   font-size: 16px !important;
   text-align: left;
   margin-top: 5px !important;
+  font-weight: 700 !important;
 }
 .max-width-opt {
   max-width: 370px;
@@ -826,13 +832,14 @@ input::placeholder {
   font-weight: 800;
   margin-top: 0;
   margin-bottom: 20px;
+  color: black;
 }
 .modal.card-modal {
   top: 26%;
 }
 .modal-body.text-block p {
-  font-size: 19px;
-  color: #676767;
+  font-size: 18px;
+  color: black;
   font-weight: 300;
   margin-bottom: 20px;
 }
@@ -904,4 +911,30 @@ button.close {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+/* loader on payment page */
+.lds-dual-ring {
+  display: inline-block;
+  width: auto;
+  height: 33px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  border-color: #04f transparent #04f transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

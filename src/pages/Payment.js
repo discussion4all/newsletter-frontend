@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import card from "../images/Card.jpg";
+import card from "../images/credit-card.png";
 import axios from "axios";
 import { BASE_URL, FRONT_BASE_URL } from "../config";
 import {
@@ -21,6 +21,7 @@ const Payment = (props) => {
   const [cardExpiryRef, setCardExpiryRef] = useState(null);
   const [cardCvcRef, setCardCvcRef] = useState(null);
   const [btnTitle, setBtnTitle] = useState("Copy to clipboard");
+  const [loading, setLoading] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const copyInputRef = useRef(null);
@@ -39,7 +40,7 @@ const Payment = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setShowCardInvalid(false);
-
+    setLoading(true);
     const card = elements.getElement(
       CardNumberElement,
       CardExpiryElement,
@@ -51,6 +52,7 @@ const Payment = (props) => {
     if (result.hasOwnProperty("error")) {
       console.log("show error...");
       setShowCardInvalid(true);
+      setLoading(false);
       return;
     }
 
@@ -70,11 +72,14 @@ const Payment = (props) => {
           cardNumberRef.clear();
           cardExpiryRef.clear();
           cardCvcRef.clear();
+          setLoading(false);
         } else {
           setShowCardInvalid(true);
+          setLoading(false);
         }
       });
     } catch (err) {
+      setLoading(false);
       setShowCardInvalid(true);
     }
   };
@@ -90,6 +95,28 @@ const Payment = (props) => {
     document.execCommand("copy");
     setBtnTitle("Copied!");
   };
+
+  const handleCardNumber = (event) => {
+    if (event.complete || event.error) {
+      cardExpiryRef && cardExpiryRef.focus();
+    }
+  };
+
+  const handleExpiryDate = (event) => {
+    if (event.complete || event.error) {
+      cardCvcRef && cardCvcRef.focus();
+    }
+  };
+
+  let subscribeBtn = {
+    cursor: "pointer",
+  };
+  if (loading) {
+    subscribeBtn = {
+      cursor: "default",
+      background: "rgb(204, 204, 204)",
+    };
+  }
 
   return (
     <div className="container">
@@ -107,7 +134,7 @@ const Payment = (props) => {
           <div>
             <div className="modal-body text-block">
               <h1>You're subscribed!</h1>
-              <p>Share this newslatter with others..</p>
+              <p>Share this newsletter with others...</p>
               <div className="flex">
                 <div className="mod-flx">
                   <input
@@ -184,12 +211,32 @@ const Payment = (props) => {
                       <img src={card} alt="card" />
                     </div>
                     <div className="cr-num">
-                      <CardNumberElement onReady={(e) => setCardNumberRef(e)} />
+                      <CardNumberElement
+                        onReady={(e) => setCardNumberRef(e)}
+                        options={{
+                          style: {
+                            invalid: {
+                              color: "#000",
+                            },
+                          },
+                        }}
+                        onChange={handleCardNumber}
+                      />
                     </div>
                   </div>
                   <div className="diflx">
                     <div className="date">
-                      <CardExpiryElement onReady={(e) => setCardExpiryRef(e)} />
+                      <CardExpiryElement
+                        onReady={(e) => setCardExpiryRef(e)}
+                        options={{
+                          style: {
+                            invalid: {
+                              color: "#000",
+                            },
+                          },
+                        }}
+                        onChange={handleExpiryDate}
+                      />
                     </div>
                     <div className="date cvv">
                       <CardCvcElement onReady={(e) => setCardCvcRef(e)} />
@@ -197,8 +244,12 @@ const Payment = (props) => {
                   </div>
                 </div>
 
-                <button type="submit" style={{ cursor: "pointer" }}>
-                  Subscribe
+                <button type="submit" style={subscribeBtn} disabled={loading}>
+                  {loading ? (
+                    <div className="lds-dual-ring"></div>
+                  ) : (
+                    "Subscribe"
+                  )}
                 </button>
               </div>
             </form>

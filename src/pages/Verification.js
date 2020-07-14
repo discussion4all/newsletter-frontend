@@ -119,6 +119,13 @@ const Verification = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const formattedNumber = (number) => {
+    if (number.slice(0, 2) === "+1") {
+      return number.slice(2);
+    }
+    return number.slice(3);
+  };
+
   return (
     <div className="container">
       <div className="main-boxes">
@@ -142,7 +149,11 @@ const Verification = (props) => {
           <div className="otp-detail">
             <h1>
               Code sent to{" "}
-              <b>{(phoneNumber && phoneNumber.slice(3)) || "(555) 555-5555"}</b>
+              <b>
+                {(phoneNumber && formattedNumber(phoneNumber)) ||
+                  "(555) 555-5555"}
+              </b>
+              .
               <span
                 style={{
                   textDecoration: "underline",
@@ -151,7 +162,7 @@ const Verification = (props) => {
                 }}
                 onClick={handleWrongNumber}
               >
-                Wrong nunber?
+                Wrong number?
               </span>
             </h1>
             <div className="otp-input">
@@ -164,6 +175,7 @@ const Verification = (props) => {
                 onPaste={handlePaste}
                 ref={firstInput}
                 onChange={firstDigit}
+                pattern="[0-9]*"
               />
               <input
                 type="text"
@@ -173,6 +185,7 @@ const Verification = (props) => {
                 value={second}
                 ref={secondInput}
                 onChange={secondDigit}
+                pattern="[0-9]*"
               />
               <input
                 type="text"
@@ -182,6 +195,7 @@ const Verification = (props) => {
                 value={third}
                 ref={thirdInput}
                 onChange={thirdDigit}
+                pattern="[0-9]*"
               />
               <input
                 type="text"
@@ -191,6 +205,7 @@ const Verification = (props) => {
                 value={fourth}
                 ref={fourthInput}
                 onChange={fourthDigit}
+                pattern="[0-9]*"
               />
             </div>
             <p>
@@ -200,14 +215,14 @@ const Verification = (props) => {
                 onClick={handleSendAgain}
                 disabled={countClick >= 3}
               >
-                Send again
+                Send again.
               </button>
             </p>
           </div>
 
           {showError && (
             <h1 class="v-error" style={{ margin: "0 10px", fontWeight: "600" }}>
-              Code is incorrect Try again
+              Code is incorrect. Try again.
             </h1>
           )}
         </div>
