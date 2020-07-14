@@ -12,6 +12,7 @@ import Subscribe from "./pages/Subscribe";
 import PhoneEntry from "./pages/PhoneEntry";
 import Verification from "./pages/Verification";
 import Payment from "./pages/Payment";
+import Dashboard from "./pages/Dashboard";
 
 const stripePromise = loadStripe("pk_test_KSl2TTYS8jeNiqowiHC27tHj00HaabhIdR");
 
@@ -23,7 +24,7 @@ function App(props) {
     <Router>
       <Switch>
         <Route path="/" exact render={(props) => <Home {...props} />} />
-        <Route path="/subscribe" render={(props) => <Subscribe {...props} />} />
+        <Route path="/pay" render={(props) => <Subscribe {...props} />} />
         <Route
           path="/phone-entry/:id"
           render={(props) => <PhoneEntry {...props} />}
@@ -40,6 +41,7 @@ function App(props) {
             </Elements>
           )}
         />
+        <Route path="/dashboard" render={(props) => <Dashboard {...props} />} />
       </Switch>
     </Router>
   );

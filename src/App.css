@@ -3,7 +3,40 @@
 body {
   font-family: "Raleway";
 }
-
+.News-head-subs h1 {
+  font-weight: normal;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+.News-head-subs h1 span {
+  float: right;
+}
+.News-head-subs span button {
+  font-size: 18px;
+  color: #000;
+  text-align: right;
+  text-decoration: none;
+  border: 1px solid;
+  padding: 10px 10px;
+  font-weight: 500;
+  border-radius: 3px;
+  background: none;
+}
+.ten-text {
+  display: flex;
+  margin: 0px -10px;
+}
+.ten-text h2 span {
+  font-weight: normal;
+}
+.ten-text h2 {
+  padding: 0px 10px;
+  font-size: 18px;
+  border-right: 1px solid;
+}
+.ten-text h2:last-child {
+  border: none;
+}
 .News-head {
   text-align: center;
 }
@@ -69,15 +102,26 @@ label.file img {
   font-size: 1rem;
   font-family: "Raleway";
 }
-
+.btn-box {
+  display: flex;
+  margin: 0px -10px;
+}
+.btn-box button {
+  color: #fff;
+  background-color: #000;
+  padding: 11px 0pc;
+  border-radius: 3px;
+}
+.p-10 {
+  width: 50%;
+  padding: 0px 10px;
+}
 .up-box {
   border: 2px solid black;
   display: flex;
   height: 37px;
-  /* margin-bottom: 20px; */
 }
 .icon-box {
-  /* border: 2px solid black; */
   width: 24%;
   padding: 4px 0px;
   border-bottom: none;
@@ -155,6 +199,9 @@ textarea:focus {
   color: black;
   font-size: 1rem;
   border-top: none;
+}
+.dashboard-editor {
+  min-height: 300px;
 }
 .create-btn {
   width: 100%;
@@ -364,6 +411,22 @@ body {
   }
   .upload-box input {
     width: 68%;
+  }
+  .News-head-subs {
+    text-align: center;
+  }
+  .News-head-subs span a {
+    font-size: 14px;
+    padding: 8px 9px;
+  }
+  .News-head-subs h1 {
+    font-size: 24px;
+  }
+  .News-head-subs h1 span {
+    float: none;
+    width: 100%;
+    margin: 14px 0px;
+    display: block;
   }
 }
 
@@ -623,7 +686,7 @@ input::placeholder {
 .main-boxes .otp-detail h1 {
   margin: 0;
   font-size: 15px;
-  color: black;
+  color: #4f4e50;
   font-weight: 500;
   margin-bottom: 15px;
 }
@@ -759,7 +822,7 @@ input::placeholder {
   float: right;
   font-style: italic;
   color: #bd0303;
-  font-weight: 700;
+  font-weight: 600;
 }
 .v-error {
   font-style: italic;
@@ -767,7 +830,6 @@ input::placeholder {
   font-size: 16px !important;
   text-align: left;
   margin-top: 5px !important;
-  font-weight: 700 !important;
 }
 .max-width-opt {
   max-width: 370px;
@@ -832,15 +894,14 @@ input::placeholder {
   font-weight: 800;
   margin-top: 0;
   margin-bottom: 20px;
-  color: black;
 }
 .modal.card-modal {
   top: 26%;
 }
 .modal-body.text-block p {
-  font-size: 18px;
-  color: black;
-  font-weight: 300;
+  font-size: 19px;
+  color: #676767;
+  font-weight: 500;
   margin-bottom: 20px;
 }
 .card-modal .modal-dialog {
@@ -852,7 +913,7 @@ input::placeholder {
   border: none;
   cursor: pointer;
   height: 100%;
-  width: 60px;
+  width: 70px;
 }
 button.close {
   color: #000;
@@ -937,4 +998,36 @@ button.close {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* minor classes */
+
+.pb-20 {
+  padding-bottom: 20px !important;
+}
+.action-btn {
+  padding: 0 10px;
+}
+.send-now-btn {
+  margin: 0 -15px;
+}
+.modal-body.text-block .flex .action-btn button {
+  padding: 6px 14px;
+  width: 80px;
+}
+.modal-body.text-block .flex .action-btn:last-child button {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+}
+.modal-body.text-block.send-now {
+  padding: 30px 22px;
+  padding-top: 25px;
+}
+.schedule-btn {
+  margin: 0 -15px;
+}
+.modal-body.text-block.schedule {
+  padding: 30px 22px;
+  padding-top: 25px;
 }

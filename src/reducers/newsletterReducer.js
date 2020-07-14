@@ -32,8 +32,6 @@ const newsletterReducer = (state = initialState, action) => {
         newsletterId,
       } = action.payload;
 
-      console.log("old", state);
-
       let newState = {
         ...state,
         title,
@@ -47,8 +45,6 @@ const newsletterReducer = (state = initialState, action) => {
         phoneNumber,
         newsletterId,
       };
-
-      console.log("new", newState);
 
       return newState;
 

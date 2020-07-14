@@ -221,7 +221,10 @@ const Verification = (props) => {
           </div>
 
           {showError && (
-            <h1 class="v-error" style={{ margin: "0 10px", fontWeight: "600" }}>
+            <h1
+              className="v-error"
+              style={{ margin: "0 10px", fontWeight: "600" }}
+            >
               Code is incorrect. Try again.
             </h1>
           )}
