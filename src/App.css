@@ -1005,6 +1005,11 @@ button.close {
 .pb-20 {
   padding-bottom: 20px !important;
 }
+.m-30 {
+  margin: 30px;
+}
+
+/* dashboard */
 .action-btn {
   padding: 0 10px;
 }

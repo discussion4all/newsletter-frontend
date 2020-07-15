@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import DateTimePicker from "react-datetime-picker";
 
 const Schedule = (props) => {
   const { showModal, closeModal, scheduleSave } = props;
+  const [dateTime, setDateTime] = useState(new Date());
+
   return (
     <Modal show={showModal} onHide={closeModal}>
       <div className="close-card"></div>
@@ -10,6 +13,15 @@ const Schedule = (props) => {
         <div>
           <div className="modal-body text-block schedule">
             <p>When would you like to send the text?</p>
+            <div className="m-30">
+              <DateTimePicker
+                onChange={(date) => setDateTime(date)}
+                value={dateTime}
+                clearIcon={null}
+                disableClock={true}
+                minDate={new Date()}
+              />
+            </div>
             <div className="flex schedule-btn">
               <div className="action-btn">
                 <button type="button" onClick={scheduleSave}>
