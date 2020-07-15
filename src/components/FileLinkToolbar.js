@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const FileLinkToolbar = () => {
+const FileLinkToolbar = (props) => {
+  const { uploadImageInText, addLinkToHtml, linkStatus } = props;
+  const [selectedBtn, setSelectedBtn] = useState(null);
+  const [linkText, setLinkText] = useState("");
+
+  useEffect(() => {
+    if (linkStatus === "success") {
+      setSelectedBtn("add");
+      setLinkText("");
+      return;
+    }
+    setLinkText("");
+  }, [linkStatus]);
+
   return (
     <div className="up-box">
       <div className="icon-box">
@@ -9,35 +22,42 @@ const FileLinkToolbar = () => {
             <i
               className="fa fa-picture-o"
               aria-hidden="true"
-              onClick={() => {}}
+              onClick={() => {
+                setSelectedBtn("image");
+              }}
             ></i>
             <input
               type="file"
               id="file"
               aria-label="File browser example"
               accept="image/x-png,image/jpeg,image/gif"
-              onChange={(event) => {}}
+              onChange={(event) => uploadImageInText(event.target.files[0])}
             />
           </label>
         </button>
-        <button type="button" onClick={() => {}}>
+        <button type="button" onClick={() => setSelectedBtn("link")}>
           <i className="fa fa-link" aria-hidden="true"></i>
         </button>
       </div>
       <div className="upload-box">
-        {/* {selectedBtn === "link" && ( */}
-        <>
-          <input
-            type="text"
-            name="text"
-            placeholder="Enter link..."
-            onChange={(event) => {}}
-          />
-          <button type="button" style={{ cursor: "pointer" }}>
-            Add
-          </button>
-        </>
-        {/* )} */}
+        {selectedBtn === "link" && (
+          <>
+            <input
+              type="text"
+              name="text"
+              placeholder="Enter link..."
+              value={linkText}
+              onChange={(event) => setLinkText(event.target.value)}
+            />
+            <button
+              type="button"
+              style={{ cursor: "pointer" }}
+              onClick={() => addLinkToHtml(linkText)}
+            >
+              Add
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

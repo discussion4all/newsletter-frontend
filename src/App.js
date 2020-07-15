@@ -41,7 +41,10 @@ function App(props) {
             </Elements>
           )}
         />
-        <Route path="/dashboard" render={(props) => <Dashboard {...props} />} />
+        <Route
+          path="/dashboard/:id"
+          render={(props) => <Dashboard {...props} />}
+        />
       </Switch>
     </Router>
   );
