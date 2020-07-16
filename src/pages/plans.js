@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { BASE_URL } from "../config";
 import { refillStore, savePayment } from "../actions/newsletterActions";
 
-const Subscribe = (props) => {
+const Plans = (props) => {
   const [yearly, setYearly] = useState("");
   const [monthly, setMonthly] = useState("");
   const [showMessage, setShowMessage] = useState(false);
@@ -24,14 +24,15 @@ const Subscribe = (props) => {
       monthly: monthlyCheckbox ? monthly : "",
     };
     axios
-      .post(`${BASE_URL}/payment`, data)
+      .post(`${BASE_URL}/newsletter/update-plans`, data)
       .then((res) => {
-        setShowMessage(true);
-        console.log(data);
-        props.savePayment(data);
-        deleteFromLocalStorage("yearly");
-        deleteFromLocalStorage("monthly");
-        props.history.push(`/phone-entry/${props.newsletterId}`);
+        if (res.data.message === "success") {
+          setShowMessage(true);
+          props.savePayment(data);
+          deleteFromLocalStorage("yearly");
+          deleteFromLocalStorage("monthly");
+          props.history.push(`/phone-entry/${props.newsletterId}`);
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -194,9 +195,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { refillStore, savePayment })(
-  Subscribe
-);
+export default connect(mapStateToProps, { refillStore, savePayment })(Plans);
 
 const deleteFromLocalStorage = (key) => {
   localStorage.removeItem(key);

@@ -8,7 +8,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
 import Home from "./pages/Home";
-import Subscribe from "./pages/Subscribe";
+import Plans from "./pages/plans";
 import PhoneEntry from "./pages/PhoneEntry";
 import Verification from "./pages/Verification";
 import Payment from "./pages/Payment";
@@ -24,7 +24,7 @@ function App(props) {
     <Router>
       <Switch>
         <Route path="/" exact render={(props) => <Home {...props} />} />
-        <Route path="/pay" render={(props) => <Subscribe {...props} />} />
+        <Route path="/plans" render={(props) => <Plans {...props} />} />
         <Route
           path="/phone-entry/:id"
           render={(props) => <PhoneEntry {...props} />}

@@ -14,6 +14,8 @@ const Dashboard = (props) => {
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [title, setTitle] = useState("");
+  const [noOfSubs, setNoOfSubs] = useState(0);
+  const [noOfText, setNoOfText] = useState(0);
   const [html, setHtml] = useState("");
   const [linkStatus, setLinkStatus] = useState("");
   const [sendNowLoading, setSendNowLoading] = useState(false);
@@ -22,7 +24,10 @@ const Dashboard = (props) => {
   useEffect(() => {
     axios.get(`${BASE_URL}/get-record/${props.match.params.id}`).then((res) => {
       if (res.data.data) {
-        const { title } = res.data.data;
+        const { title, subscribers, textSent } = res.data.data;
+        console.log("subscribers", subscribers);
+        setNoOfSubs(subscribers.length);
+        setNoOfText(textSent);
         setTitle(title);
       }
     });
@@ -85,16 +90,20 @@ const Dashboard = (props) => {
     setShowScheduleModal(false);
   };
 
-  const handleYes = (phoneNumber) => {
+  const handleYes = () => {
     setSendNowLoading(true);
     axios
-      .post(`${BASE_URL}/send-text/now`, { text: html, phoneNumber })
+      .post(`${BASE_URL}/send-text/now`, {
+        text: html,
+        newsletterId: props.match.params.id,
+      })
       .then((res) => {
         if (res.data.message === "success") {
           console.log("response", res.data);
           setShowSendNowModal(false);
           setShowSuccessModal(true);
           setSendNowLoading(false);
+          setNoOfText(noOfText + 1);
           setHtml("");
         }
       })
@@ -150,10 +159,10 @@ const Dashboard = (props) => {
         </div>
         <div className="ten-text">
           <h2>
-            <b>10</b> <span>texts</span>
+            <b>{noOfText || 0}</b> <span>texts</span>
           </h2>
           <h2>
-            <b>100</b> <span>subscribers</span>
+            <b>{noOfSubs || 0}</b> <span>subscribers</span>
           </h2>
         </div>
 

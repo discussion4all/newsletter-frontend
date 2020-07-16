@@ -45,7 +45,7 @@ const NewletterForm = (props) => {
     });
 
     axios
-      .post(`${BASE_URL}/create`, {
+      .post(`${BASE_URL}/newsletter/create`, {
         newsletterId,
         image: resMainImage,
         title,
@@ -55,7 +55,7 @@ const NewletterForm = (props) => {
       .then((res) => {
         if (res.data.message === "success") {
           history.push({
-            pathname: "/pay",
+            pathname: "/plans",
           });
         }
       })

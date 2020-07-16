@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "react-bootstrap/Modal";
 
 const SendNow = (props) => {
   const { showModal, closeModal, handleYes, loading } = props;
-  const [phoneNumber, setPhoneNumber] = useState("");
 
   let yesBtnStyle = {};
   if (loading) {
@@ -20,19 +19,12 @@ const SendNow = (props) => {
         <div>
           <div className="modal-body text-block send-now">
             <p>Are you sure you want to send the text now?</p>
-            <div style={{ marginBottom: "14px" }}>
-              <input
-                type="text"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="+919909582774"
-              />
-            </div>
+
             <div className="flex send-now-btn">
               <div className="action-btn">
                 <button
                   type="button"
-                  onClick={() => handleYes(phoneNumber)}
+                  onClick={handleYes}
                   style={yesBtnStyle}
                   disabled={loading}
                 >

@@ -59,14 +59,16 @@ const Payment = (props) => {
     const data = {
       pay: payment[selected],
       token: result.token.id,
+      phoneNumber: props.newsletter.phoneNumber,
+      newsletterId: props.newsletter.newsletterId,
     };
 
     console.log("data to send...", data);
 
     try {
-      axios.post(`${BASE_URL}/charge-card`, data).then((res) => {
+      axios.post(`${BASE_URL}/newsletter/subscribe`, data).then((res) => {
         console.log(res);
-        if (res.data.charge && res.data.charge.status === "succeeded") {
+        if (res.data.message === "success") {
           console.log("payment made...", res.data);
           setShowModal(true);
           cardNumberRef.clear();
