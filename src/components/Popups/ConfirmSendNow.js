@@ -24,6 +24,7 @@ const SendNow = (props) => {
               <div className="action-btn">
                 <button
                   type="button"
+                  className="yes-btn"
                   onClick={handleYes}
                   style={yesBtnStyle}
                   disabled={loading}

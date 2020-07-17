@@ -131,6 +131,7 @@ const PhoneEntry = (props) => {
                   placeholder="(555) 555-5555"
                   onChange={handlePhoneNumber}
                   style={{ fontSize: "1rem" }}
+                  inputMode="numeric"
                 />
               </div>
               <button type="submit">Sign Up</button>

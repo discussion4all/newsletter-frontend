@@ -992,6 +992,22 @@ button.close {
   border-color: #04f transparent #04f transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+.create-btn > .lds-dual-ring::after {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+.create-btn > .lds-dual-ring {
+  height: 15px;
+}
+.yes-btn > .lds-dual-ring {
+  height: 20px;
+}
+.yes-btn > .lds-dual-ring::after {
+  width: 26px;
+  height: 26px;
+  margin: 0;
+}
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
