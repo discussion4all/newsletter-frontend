@@ -20,6 +20,7 @@ const NewletterForm = (props) => {
   const [loadingImg, setLoadingImg] = useState(false);
   const [html, setHtml] = useState("");
   const [position, setPosition] = useState(0);
+  const [showLoader, setShowLoader] = useState(false);
 
   const sampleInput = useRef(null);
   const history = useHistory();
@@ -33,6 +34,7 @@ const NewletterForm = (props) => {
 
   const submit = (event) => {
     event.preventDefault();
+    setShowLoader(true);
     console.log(description, html, resMainImage);
     const newsletterId = Math.floor(Math.random() * 1000000);
 
@@ -54,12 +56,16 @@ const NewletterForm = (props) => {
       })
       .then((res) => {
         if (res.data.message === "success") {
+          setShowLoader(false);
           history.push({
             pathname: "/plans",
           });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setShowLoader(false);
+      });
   };
 
   useEffect(() => {
@@ -116,7 +122,8 @@ const NewletterForm = (props) => {
     console.log(imageInText);
   };
 
-  const handleAddToText = async () => {
+  const handleAddToText = async (e) => {
+    e.preventDefault();
     const checkUrlValidity = await axios
       .post(`${BASE_URL}/link/validate`, { url: addText })
       .then((res) => res.data.message)
@@ -147,7 +154,7 @@ const NewletterForm = (props) => {
   };
 
   let btnStyle = {};
-  if (buttonState) {
+  if (buttonState || showLoader) {
     btnStyle = {
       cursor: "default",
       background: "#cccccc",
@@ -239,7 +246,7 @@ const NewletterForm = (props) => {
         </div>
         <div className="upload-box">
           {selectedBtn === "link" && (
-            <>
+            <form onSubmit={handleAddToText}>
               <input
                 type="text"
                 name="text"
@@ -247,14 +254,10 @@ const NewletterForm = (props) => {
                 value={addText}
                 onChange={(event) => setAddText(event.target.value)}
               />
-              <button
-                type="button"
-                onClick={handleAddToText}
-                style={{ cursor: "pointer" }}
-              >
+              <button type="submit" style={{ cursor: "pointer" }}>
                 Add
               </button>
-            </>
+            </form>
           )}
         </div>
       </div>
@@ -268,10 +271,10 @@ const NewletterForm = (props) => {
       <button
         className="create-btn bold"
         type="submit"
-        disabled={buttonState}
+        disabled={buttonState || showLoader}
         style={btnStyle}
       >
-        Create
+        {showLoader ? <div className="lds-dual-ring"></div> : "Create"}
       </button>
     </form>
   );

@@ -41,7 +41,7 @@ const FileLinkToolbar = (props) => {
       </div>
       <div className="upload-box">
         {selectedBtn === "link" && (
-          <>
+          <form onSubmit={(event) => addLinkToHtml(event, linkText)}>
             <input
               type="text"
               name="text"
@@ -49,14 +49,10 @@ const FileLinkToolbar = (props) => {
               value={linkText}
               onChange={(event) => setLinkText(event.target.value)}
             />
-            <button
-              type="button"
-              style={{ cursor: "pointer" }}
-              onClick={() => addLinkToHtml(linkText)}
-            >
+            <button type="submit" style={{ cursor: "pointer" }}>
               Add
             </button>
-          </>
+          </form>
         )}
       </div>
     </div>

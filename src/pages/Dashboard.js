@@ -53,7 +53,8 @@ const Dashboard = (props) => {
     }
   };
 
-  const addLinkToHtml = async (link) => {
+  const addLinkToHtml = async (e, link) => {
+    e.preventDefault();
     const checkUrlValidity = await axios
       .post(`${BASE_URL}/link/validate`, { url: link })
       .then((res) => res.data.message)
