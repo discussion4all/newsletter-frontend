@@ -176,6 +176,7 @@ const Verification = (props) => {
                 ref={firstInput}
                 onChange={firstDigit}
                 pattern="[0-9]*"
+                inputmode="numeric"
               />
               <input
                 type="text"
@@ -186,6 +187,7 @@ const Verification = (props) => {
                 ref={secondInput}
                 onChange={secondDigit}
                 pattern="[0-9]*"
+                inputmode="numeric"
               />
               <input
                 type="text"
@@ -196,6 +198,7 @@ const Verification = (props) => {
                 ref={thirdInput}
                 onChange={thirdDigit}
                 pattern="[0-9]*"
+                inputmode="numeric"
               />
               <input
                 type="text"
@@ -206,6 +209,7 @@ const Verification = (props) => {
                 ref={fourthInput}
                 onChange={fourthDigit}
                 pattern="[0-9]*"
+                inputmode="numeric"
               />
             </div>
             <p>

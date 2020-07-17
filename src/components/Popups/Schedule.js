@@ -24,7 +24,7 @@ const Schedule = (props) => {
             </div>
             <div className="flex schedule-btn">
               <div className="action-btn">
-                <button type="button" onClick={scheduleSave}>
+                <button type="button" onClick={() => scheduleSave(dateTime)}>
                   Save
                 </button>
               </div>

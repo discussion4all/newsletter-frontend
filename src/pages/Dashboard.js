@@ -19,6 +19,7 @@ const Dashboard = (props) => {
   const [html, setHtml] = useState("");
   const [linkStatus, setLinkStatus] = useState("");
   const [sendNowLoading, setSendNowLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -100,6 +101,7 @@ const Dashboard = (props) => {
       .then((res) => {
         if (res.data.message === "success") {
           console.log("response", res.data);
+          setShowError(false);
           setShowSendNowModal(false);
           setShowSuccessModal(true);
           setSendNowLoading(false);
@@ -107,14 +109,37 @@ const Dashboard = (props) => {
           setHtml("");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setSendNowLoading(false);
+        setShowSendNowModal(false);
+        setShowError(true);
+      });
   };
 
   const closeSuccessModal = () => {
     setShowSuccessModal(false);
   };
 
-  const scheduleSave = () => {
+  const scheduleSave = (time) => {
+    const data = {
+      newsletterId: props.match.params.id,
+      time,
+      text: html,
+    };
+    console.log(time);
+    axios
+      .post(`${BASE_URL}/send-text/schedule`, data)
+      .then((res) => {
+        if (res.data.message === "success") {
+          console.log(res.data);
+          setShowError(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setShowError(false);
+      });
     setShowScheduleModal(false);
     setShowSuccessModal(true);
   };
@@ -201,6 +226,11 @@ const Dashboard = (props) => {
             </button>
           </div>
         </div>
+        {showError && (
+          <p className="v-error">
+            Error sending out text message. Please try again later.
+          </p>
+        )}
       </div>
     </div>
   );
