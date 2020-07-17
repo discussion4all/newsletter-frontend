@@ -22,7 +22,7 @@ const Dashboard = (props) => {
   const editorRef = useRef(null);
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/get-record/${props.match.params.id}`).then((res) => {
+    axios.get(`${BASE_URL}/newsletter/${props.match.params.id}`).then((res) => {
       if (res.data.data) {
         const { title, subscribers, textSent } = res.data.data;
         console.log("subscribers", subscribers);
@@ -54,13 +54,13 @@ const Dashboard = (props) => {
 
   const addLinkToHtml = async (link) => {
     const checkUrlValidity = await axios
-      .post(`${BASE_URL}/validate-url`, { url: link })
+      .post(`${BASE_URL}/link/validate`, { url: link })
       .then((res) => res.data.message)
       .catch((err) => console.log(err));
 
     if (checkUrlValidity === "valid") {
       axios
-        .post(`${BASE_URL}/short-link`, { link: link })
+        .post(`${BASE_URL}/link/shorten`, { link: link })
         .then((res) => {
           if (res.data.message === "success") {
             setHtml(html + " " + res.data.link);

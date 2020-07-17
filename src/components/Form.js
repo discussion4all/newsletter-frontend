@@ -118,7 +118,7 @@ const NewletterForm = (props) => {
 
   const handleAddToText = async () => {
     const checkUrlValidity = await axios
-      .post(`${BASE_URL}/validate-url`, { url: addText })
+      .post(`${BASE_URL}/link/validate`, { url: addText })
       .then((res) => res.data.message)
       .catch((err) => console.log(err));
 
@@ -126,7 +126,7 @@ const NewletterForm = (props) => {
 
     if (checkUrlValidity === "valid") {
       axios
-        .post(`${BASE_URL}/short-link`, { link: addText })
+        .post(`${BASE_URL}/link/shorten`, { link: addText })
         .then((res) => {
           if (res.data.link) {
             setSelectedBtn("add");

@@ -26,7 +26,7 @@ const Verification = (props) => {
   const handleNext = () => {
     const code = first + second + third + fourth;
     axios
-      .post(`${BASE_URL}/verify-code`, { code, phoneNumber })
+      .post(`${BASE_URL}/verification-code/verify`, { code, phoneNumber })
       .then((res) => {
         console.log(res);
         if (res.data.verifyStatus !== "approved") {

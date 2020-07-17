@@ -20,7 +20,7 @@ const PhoneEntry = (props) => {
   } = props.newsletter;
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/get-record/${props.match.params.id}`).then((res) => {
+    axios.get(`${BASE_URL}/newsletter/${props.match.params.id}`).then((res) => {
       if (res.data.data) {
         const {
           description,
@@ -51,7 +51,9 @@ const PhoneEntry = (props) => {
     event.preventDefault();
     props.savePhoneNumber(countryCode + phoneNumber);
     axios
-      .post(`${BASE_URL}/send-code`, { phoneNumber: countryCode + phoneNumber })
+      .post(`${BASE_URL}/verification-code/send`, {
+        phoneNumber: countryCode + phoneNumber,
+      })
       .then((res) => {
         if (res.data.message === "success") {
           props.history.push(`/phone-verification`);
