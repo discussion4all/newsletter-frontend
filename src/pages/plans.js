@@ -135,6 +135,7 @@ const Plans = (props) => {
             <span>
               Yearly{" "}
               <input
+                style={{ borderRadius: "0px" }}
                 type="text"
                 name="yearly"
                 placeholder="$0"
@@ -155,6 +156,7 @@ const Plans = (props) => {
             <span>
               Monthly{" "}
               <input
+                style={{ borderRadius: "0px" }}
                 type="text"
                 name="monthly"
                 placeholder="$0"

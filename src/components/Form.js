@@ -202,6 +202,7 @@ const NewletterForm = (props) => {
       <div className="news-form">
         <div className="input-text">
           <input
+            style={{ borderRadius: "0px" }}
             type="text"
             name="text"
             placeholder="Title"
