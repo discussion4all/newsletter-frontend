@@ -66,10 +66,38 @@ const Payment = (props) => {
     console.log("data to send...", data);
 
     try {
-      axios.post(`${BASE_URL}/newsletter/subscribe`, data).then((res) => {
+      axios.post(`${BASE_URL}/stripe/charge`, data).then(async (res) => {
         console.log(res);
         if (res.data.message === "success") {
           console.log("payment made...", res.data);
+
+          const result = await stripe.confirmCardPayment(
+            res.data.client_secret,
+            {
+              payment_method: {
+                card: card,
+                billing_details: {
+                  name: "Pranav",
+                },
+              },
+            }
+          );
+
+          if (result.error) {
+            // Show error to your customer (e.g., insufficient funds)
+            console.log("error: ", result);
+          } else {
+            // The payment has been processed!
+            if (result.paymentIntent.status === "succeeded") {
+              console.log("success", result);
+              // Show a success message to your customer
+              // There's a risk of the customer closing the window before callback
+              // execution. Set up a webhook or plugin to listen for the
+              // payment_intent.succeeded event that handles any business critical
+              // post-payment actions.
+            }
+          }
+
           setShowModal(true);
           cardNumberRef.clear();
           cardExpiryRef.clear();
