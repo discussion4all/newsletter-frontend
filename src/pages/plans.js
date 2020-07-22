@@ -54,7 +54,7 @@ const Plans = (props) => {
     if (code) {
       axios
         .post(`${BASE_URL}/stripe/connect`, {
-          id: 1,
+          newsletterId: props.newsletterId,
           code,
         })
         .then((res) => {
