@@ -53,7 +53,7 @@ const Plans = (props) => {
     const code = urlParams.get("code");
     if (code) {
       axios
-        .post(`${BASE_URL}/stripe`, {
+        .post(`${BASE_URL}/stripe/connect`, {
           id: 1,
           code,
         })
