@@ -52,9 +52,10 @@ const Plans = (props) => {
     const urlParams = new URLSearchParams(queryString);
     const code = urlParams.get("code");
     if (code) {
+      let newsletter = JSON.parse(localStorage.getItem("newsletterData"));
       axios
         .post(`${BASE_URL}/stripe/connect`, {
-          newsletterId: props.newsletterId,
+          newsletterId: newsletter.newsletterId,
           code,
         })
         .then((res) => {
