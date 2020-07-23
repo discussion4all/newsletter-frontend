@@ -41,36 +41,22 @@ const Payment = (props) => {
     event.preventDefault();
     setShowCardInvalid(false);
     setLoading(true);
+
     const card = elements.getElement(
       CardNumberElement,
       CardExpiryElement,
       CardCvcElement
     );
 
-    const result = await stripe.createToken(card);
-
-    if (result.hasOwnProperty("error")) {
-      console.log("show error...");
-      setShowCardInvalid(true);
-      setLoading(false);
-      return;
-    }
-
     const data = {
       pay: payment[selected],
-      token: result.token.id,
       phoneNumber: props.newsletter.phoneNumber,
       newsletterId: props.newsletter.newsletterId,
     };
 
-    console.log("data to send...", data);
-
     try {
-      axios.post(`${BASE_URL}/stripe/charge`, data).then(async (res) => {
-        console.log(res);
+      axios.post(`${BASE_URL}/newsletter/subscribe`, data).then(async (res) => {
         if (res.data.message === "success") {
-          console.log("payment made...", res.data);
-
           const result = await stripe.confirmCardPayment(
             res.data.client_secret,
             {
@@ -84,25 +70,19 @@ const Payment = (props) => {
           );
 
           if (result.error) {
-            // Show error to your customer (e.g., insufficient funds)
+            setShowCardInvalid(true);
+            setLoading(false);
             console.log("error: ", result);
           } else {
             // The payment has been processed!
             if (result.paymentIntent.status === "succeeded") {
-              console.log("success", result);
-              // Show a success message to your customer
-              // There's a risk of the customer closing the window before callback
-              // execution. Set up a webhook or plugin to listen for the
-              // payment_intent.succeeded event that handles any business critical
-              // post-payment actions.
+              setShowModal(true);
+              cardNumberRef.clear();
+              cardExpiryRef.clear();
+              cardCvcRef.clear();
+              setLoading(false);
             }
           }
-
-          setShowModal(true);
-          cardNumberRef.clear();
-          cardExpiryRef.clear();
-          cardCvcRef.clear();
-          setLoading(false);
         } else {
           setShowCardInvalid(true);
           setLoading(false);
@@ -119,7 +99,6 @@ const Payment = (props) => {
   };
 
   const handleCopy = () => {
-    console.log(copyInputRef);
     copyInputRef.current.select();
     copyInputRef.current.setSelectionRange(0, 99999);
     document.execCommand("copy");
