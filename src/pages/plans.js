@@ -9,6 +9,7 @@ const Plans = (props) => {
   const [monthly, setMonthly] = useState("");
   const [showMessage, setShowMessage] = useState(false);
   const [stripeConnected, setStripeConnected] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const queryString = window.location.search;
   const [userStatus, setUserStatus] = useState(false);
@@ -17,6 +18,7 @@ const Plans = (props) => {
   const [saveDisable, setSaveDisable] = useState(true);
 
   const handleSave = () => {
+    setShowLoader(true);
     console.log("clicked");
     const data = {
       newsletterId: props.newsletterId,
@@ -26,6 +28,7 @@ const Plans = (props) => {
     axios
       .post(`${BASE_URL}/newsletter/update-plans`, data)
       .then((res) => {
+        setShowLoader(false);
         if (res.data.message === "success") {
           setShowMessage(true);
           props.savePayment(data);
@@ -34,7 +37,10 @@ const Plans = (props) => {
           props.history.push(`/phone-entry/${props.newsletterId}`);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setShowLoader(false);
+      });
   };
 
   // updates save button status
@@ -99,7 +105,7 @@ const Plans = (props) => {
   };
 
   let btnStyle = {};
-  if (saveDisable) {
+  if (saveDisable || showLoader) {
     btnStyle = {
       cursor: "default",
       background: "#cccccc",
@@ -174,11 +180,11 @@ const Plans = (props) => {
           </button>
           <button
             className="save-btn bold"
-            disabled={saveDisable}
+            disabled={saveDisable || showLoader}
             style={btnStyle}
             onClick={handleSave}
           >
-            Save
+            {showLoader ? <div className="lds-dual-ring"></div> : "Save"}
           </button>
         </div>
         {showMessage && (

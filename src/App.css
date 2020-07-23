@@ -1008,6 +1008,14 @@ button.close {
   height: 26px;
   margin: 0;
 }
+.save-btn > .lds-dual-ring::after {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+.save-btn > .lds-dual-ring {
+  height: 15px;
+}
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
