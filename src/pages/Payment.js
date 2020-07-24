@@ -48,8 +48,18 @@ const Payment = (props) => {
       CardCvcElement
     );
 
+    const result = await stripe.createToken(card);
+
+    if (result.hasOwnProperty("error")) {
+      console.log("show error...");
+      setShowCardInvalid(true);
+      setLoading(false);
+      return;
+    }
+
     const data = {
-      pay: payment[selected],
+      plan: selected,
+      token: result.token.id,
       phoneNumber: props.newsletter.phoneNumber,
       newsletterId: props.newsletter.newsletterId,
     };
@@ -57,32 +67,37 @@ const Payment = (props) => {
     try {
       axios.post(`${BASE_URL}/newsletter/subscribe`, data).then(async (res) => {
         if (res.data.message === "success") {
-          const result = await stripe.confirmCardPayment(
-            res.data.client_secret,
-            {
-              payment_method: {
-                card: card,
-                billing_details: {
-                  name: "Pranav",
-                },
-              },
-            }
-          );
+          // const result = await stripe.confirmCardPayment(
+          //   res.data.client_secret,
+          //   {
+          //     payment_method: {
+          //       card: card,
+          //       billing_details: {
+          //         name: "Pranav",
+          //       },
+          //     },
+          //   }
+          // );
 
-          if (result.error) {
-            setShowCardInvalid(true);
-            setLoading(false);
-            console.log("error: ", result);
-          } else {
-            // The payment has been processed!
-            if (result.paymentIntent.status === "succeeded") {
-              setShowModal(true);
-              cardNumberRef.clear();
-              cardExpiryRef.clear();
-              cardCvcRef.clear();
-              setLoading(false);
-            }
-          }
+          // if (result.error) {
+          //   setShowCardInvalid(true);
+          //   setLoading(false);
+          //   console.log("error: ", result);
+          // } else {
+          //   // The payment has been processed!
+          //   if (result.paymentIntent.status === "succeeded") {
+          //     setShowModal(true);
+          //     cardNumberRef.clear();
+          //     cardExpiryRef.clear();
+          //     cardCvcRef.clear();
+          //     setLoading(false);
+          //   }
+          // }
+          setShowModal(true);
+          cardNumberRef.clear();
+          cardExpiryRef.clear();
+          cardCvcRef.clear();
+          setLoading(false);
         } else {
           setShowCardInvalid(true);
           setLoading(false);
