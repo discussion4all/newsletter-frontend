@@ -238,6 +238,7 @@ const NewletterForm = (props) => {
                 aria-label="File browser example"
                 accept="image/x-png,image/jpeg,image/gif"
                 onChange={(event) => uploadImageInText(event.target.files[0])}
+                style={{ height: "19px", width: "19px", display: "none" }}
               />
             </label>
           </button>
