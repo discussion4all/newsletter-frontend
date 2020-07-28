@@ -167,6 +167,12 @@ const Payment = (props) => {
                     name="text"
                     value={`${FRONT_BASE_URL}/phone-entry/${props.newsletter.newsletterId}`}
                     onChange={() => {}}
+                    style={{
+                      fontSize: "1rem",
+                      borderRadius: "0px",
+                      border: "1px solid black",
+                      paddingTop: "0px",
+                    }}
                   />
                 </div>
                 <div className="tooltip">

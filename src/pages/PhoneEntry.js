@@ -122,7 +122,7 @@ const PhoneEntry = (props) => {
                   style={{ fontSize: "1rem" }}
                 >
                   <option value="+1">+1</option>
-                  <option value="+91">+91</option>
+                  {/* <option value="+91">+91</option> */}
                 </select>
                 <input
                   type="text"
@@ -134,6 +134,7 @@ const PhoneEntry = (props) => {
                     fontSize: "1rem",
                     borderRadius: "0px",
                     border: "1px solid black",
+                    paddingTop: "0px",
                   }}
                   inputMode="numeric"
                 />
