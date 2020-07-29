@@ -212,28 +212,33 @@ const Payment = (props) => {
         <div className="max-width-card">
           <div className="card-detail">
             <form onSubmit={handleSubmit}>
-              <div className="rad-btn">
-                <input
-                  type="radio"
-                  name="text"
-                  checked={selected === "yearly"}
-                  value="yearly"
-                  onChange={handlePeriod}
-                />
-                <span>Yearly</span>
-                <h1>{payment.yearly || "$0"}</h1>
-              </div>
-              <div className="rad-btn">
-                <input
-                  type="radio"
-                  name="text"
-                  checked={selected === "monthly"}
-                  value="monthly"
-                  onChange={handlePeriod}
-                />
-                <span>Monthly</span>
-                <h1>{payment.monthly || "$0"}</h1>
-              </div>
+              {payment.yearly ? (
+                <div className="rad-btn">
+                  <input
+                    type="radio"
+                    name="text"
+                    checked={selected === "yearly"}
+                    value="yearly"
+                    onChange={handlePeriod}
+                  />
+                  <span>Yearly</span>
+                  <h1>{payment.yearly || "$0"}</h1>
+                </div>
+              ) : null}
+              {payment.monthly ? (
+                <div className="rad-btn">
+                  <input
+                    type="radio"
+                    name="text"
+                    checked={selected === "monthly"}
+                    value="monthly"
+                    onChange={handlePeriod}
+                  />
+                  <span>Monthly</span>
+                  <h1>{payment.monthly || "$0"}</h1>
+                </div>
+              ) : null}
+
               <div className="select-mod-1">
                 <div className="flex">
                   <div className="mod-flx">
@@ -285,8 +290,8 @@ const Payment = (props) => {
             </form>
           </div>
           {showCardInvalid && (
-            <h1 className="v-error">
-              Credit card information is invalid. Try again
+            <h1 className="v-error fw-500">
+              <i>Credit card information is invalid. Try again</i>
             </h1>
           )}
         </div>

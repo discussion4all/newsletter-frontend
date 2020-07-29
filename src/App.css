@@ -174,7 +174,6 @@ textarea:focus {
   border-left: 2px solid black;
 
   border-bottom: none;
-  background-color: #eee;
   font-size: 1rem;
   font-family: "Raleway";
 }
@@ -428,12 +427,10 @@ body {
     margin: 14px 0px;
     display: block;
   }
-  .news-check-1 {
-    display: block;
-  }
+
   .news-check-1 span input,
   .news-check-2 span input {
-    width: 22%;
+    width: 17%;
   }
 }
 
@@ -487,7 +484,7 @@ button:focus {
 
 /* phone pages */
 
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 body {
   font-family: "Raleway";
 }
@@ -830,17 +827,15 @@ input::placeholder {
 }
 .valid span {
   float: right;
-  font-style: italic;
   color: #bd0303;
-  font-weight: 600;
+  font-weight: 500;
 }
 .v-error {
-  font-style: italic;
   color: #bd0303;
   font-size: 16px !important;
   text-align: left;
   margin-top: 5px !important;
-  font-weight: 600;
+  font-weight: 500;
 }
 .max-width-opt {
   max-width: 370px;
@@ -892,7 +887,7 @@ input::placeholder {
 .modal-body.text-block {
   text-align: center;
   text-align: center;
-  padding: 45px 60px;
+  padding: 45px 10px;
   padding-top: 5px;
 }
 .modal-body.text-block .flex {
@@ -1145,4 +1140,8 @@ button.close {
   input[type="url"] {
     font-size: 16px;
   }
+}
+
+.fw-500 {
+  font-weight: 500 !important;
 }

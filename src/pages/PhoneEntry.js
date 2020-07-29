@@ -151,7 +151,11 @@ const PhoneEntry = (props) => {
             >
               view sample
             </a>
-            {showError && <span>Enter a valid U.S. phone number.</span>}
+            {showError && (
+              <span>
+                <i>Enter a valid U.S. phone number.</i>
+              </span>
+            )}
           </div>
 
           {showSample && sampleText && (

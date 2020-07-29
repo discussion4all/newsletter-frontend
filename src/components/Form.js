@@ -178,7 +178,7 @@ const NewletterForm = (props) => {
   };
   // console.log(position);
   return (
-    <form onSubmit={submit} encType="multipart/form-data">
+    <>
       <div className="img-upload">
         {loadingImg ? (
           <div className="loader file"></div>
@@ -272,13 +272,13 @@ const NewletterForm = (props) => {
 
       <button
         className="create-btn bold"
-        type="submit"
+        onClick={submit}
         disabled={buttonState || showLoader}
         style={btnStyle}
       >
         {showLoader ? <div className="lds-dual-ring"></div> : "Create"}
       </button>
-    </form>
+    </>
   );
 };
 
