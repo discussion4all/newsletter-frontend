@@ -137,6 +137,7 @@ const PhoneEntry = (props) => {
                     paddingTop: "0px",
                   }}
                   inputMode="numeric"
+                  autocomplete="home tel"
                 />
               </div>
               <button type="submit">Sign Up</button>
