@@ -95,6 +95,9 @@ const Plans = (props) => {
   const STRIPE_URL =
     "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_HYMQTCYre4aXjrMlLSabe6otHE9znoen&scope=read_write";
 
+  const STRIPE_EXPRESS_URL =
+    "https://connect.stripe.com/express/oauth/authorize?client_id=ca_HYMQTCYre4aXjrMlLSabe6otHE9znoen";
+
   const handleStripeConnect = () => {
     const data = {
       yearly: yearlyCheckbox ? yearly : "",
