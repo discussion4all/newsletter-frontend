@@ -104,7 +104,7 @@ const Plans = (props) => {
       monthly: monthlyCheckbox ? monthly : "",
     };
     props.savePayment(data);
-    window.location.href = STRIPE_URL;
+    window.location.href = STRIPE_EXPRESS_URL;
   };
 
   let btnStyle = {};
