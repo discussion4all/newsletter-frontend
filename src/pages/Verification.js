@@ -103,9 +103,9 @@ const Verification = (props) => {
 
   const handleSendAgain = () => {
     setCountClick(countClick + 1);
-    console.log("cliked");
+    console.log("cliked", phoneNumber);
     axios
-      .post(`${BASE_URL}/send-code`, { phoneNumber })
+      .post(`${BASE_URL}/verification-code/send`, { phoneNumber })
       .then((res) => {
         if (res.data.message === "success") {
           // props.history.push("/phone-verification");

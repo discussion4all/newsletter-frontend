@@ -19,7 +19,8 @@ const Schedule = (props) => {
                 value={dateTime}
                 clearIcon={null}
                 disableClock={true}
-                minDate={new Date()}
+                minDate={new Date()}               
+                maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1))}
               />
             </div>
             <div className="flex schedule-btn">

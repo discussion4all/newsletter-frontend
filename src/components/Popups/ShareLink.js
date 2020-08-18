@@ -37,6 +37,7 @@ const ShareLink = (props) => {
               <div className="tooltip">
                 <button
                   type="button"
+                  className="ff-r"
                   onClick={handleCopy}
                   onMouseOut={() => setBtnTitle("Copy to clipboard")}
                 >

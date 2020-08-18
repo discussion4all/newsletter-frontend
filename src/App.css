@@ -12,7 +12,7 @@ body {
   float: right;
 }
 .News-head-subs span button {
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
   text-align: right;
   text-decoration: none;
@@ -209,7 +209,7 @@ textarea:focus {
   padding: 8px 0px;
   margin: 0;
   border: navajowhite;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   font-family: "Raleway";
 }
@@ -1144,4 +1144,11 @@ button.close {
 
 .fw-500 {
   font-weight: 500 !important;
+}
+
+.ff-r {
+  font-family: "Raleway";
+}
+.pb-1 {
+  padding-bottom: 1rem !important;
 }

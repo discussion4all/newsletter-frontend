@@ -183,7 +183,7 @@ const Dashboard = (props) => {
             </span>
           </h1>
         </div>
-        <div className="ten-text">
+        <div className="ten-text pb-1">
           <h2>
             <b>{noOfText || 0}</b> <span>texts</span>
           </h2>
